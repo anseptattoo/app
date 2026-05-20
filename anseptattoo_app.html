@@ -1,0 +1,903 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --beige: #F2EDE4;
+    --beige-dark: #E0D8CC;
+    --olive: #6B7252;
+    --olive-light: #8B9468;
+    --olive-faint: #E8EBE0;
+    --terra: #B5593A;
+    --terra-light: #D4795A;
+    --terra-faint: #F5E8E3;
+    --ink: #1C1C1A;
+    --ink-mid: #3A3935;
+    --ink-soft: #6B6A65;
+    --ink-hint: #9A9890;
+    --surface: #F7F4EF;
+    --card: #FDFCF9;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--beige);
+    color: var(--ink);
+    max-width: 390px;
+    margin: 0 auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--ink);
+    padding: 28px 20px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    border: 1px solid rgba(242,237,228,0.08);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    top: 10px; right: 10px;
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    border: 1px solid rgba(242,237,228,0.05);
+  }
+  .brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--beige);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+  .brand span {
+    color: var(--terra-light);
+  }
+  .brand-sub {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink-hint);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* NEXT SESSION CARD */
+  .next-card {
+    background: var(--terra);
+    margin: 16px 16px 0;
+    border-radius: 16px;
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .next-card::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; right: -20px;
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .next-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(242,237,228,0.7);
+    margin-bottom: 8px;
+  }
+  .next-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--beige);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .next-meta {
+    display: flex;
+    gap: 16px;
+  }
+  .next-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: rgba(242,237,228,0.85);
+  }
+  .next-meta-item i { font-size: 13px; }
+
+  .design-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 12px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--beige);
+  }
+  .design-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #F2C97E;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    margin: 12px 16px 0;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 12px 16px;
+    border: 0.5px solid var(--beige-dark);
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+  .progress-steps {
+    display: flex;
+    gap: 4px;
+  }
+  .step-pill {
+    flex: 1;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--beige-dark);
+  }
+  .step-pill.done { background: var(--olive); }
+  .step-pill.current { background: var(--terra); }
+
+  /* TABS */
+  .tabs-wrap {
+    margin: 16px 0 0;
+    border-bottom: 0.5px solid var(--beige-dark);
+    position: sticky;
+    top: 0;
+    background: var(--beige);
+    z-index: 10;
+  }
+  .tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 16px;
+    gap: 0;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  .tab.active {
+    color: var(--terra);
+    font-weight: 500;
+    border-bottom-color: var(--terra);
+  }
+
+  /* CONTENT */
+  .content {
+    padding: 16px;
+    display: none;
+  }
+  .content.active { display: block; }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .add-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--terra);
+    color: var(--beige);
+    border: none;
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .add-btn i { font-size: 13px; }
+
+  /* PROJECT CARD */
+  .project-card {
+    background: var(--card);
+    border-radius: 14px;
+    border: 0.5px solid var(--beige-dark);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .project-card:hover { border-color: var(--terra-light); }
+  .pc-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  .pc-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .pc-ig {
+    font-size: 11px;
+    color: var(--ink-hint);
+    margin-top: 2px;
+  }
+  .status-pill {
+    font-size: 10px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .s-agendado { background: var(--olive-faint); color: var(--olive); }
+  .s-confirmado { background: #E8F0E8; color: #3A7A3A; }
+  .s-tatuado { background: var(--ink); color: var(--beige); }
+  .s-retoque { background: var(--terra-faint); color: var(--terra); }
+
+  .pc-divider {
+    height: 0.5px;
+    background: var(--beige-dark);
+    margin: 10px 0;
+  }
+  .pc-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 5px;
+  }
+  .pc-row strong { color: var(--ink-mid); font-weight: 500; }
+
+  .pc-design-row {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .design-step {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--beige-dark);
+  }
+  .design-step.done { background: var(--olive); }
+  .design-step.active { background: var(--terra); }
+
+  .pc-design-labels {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .design-lbl {
+    flex: 1;
+    font-size: 8px;
+    color: var(--ink-hint);
+    text-align: center;
+  }
+  .design-lbl.active { color: var(--terra); font-weight: 500; }
+
+  /* STARS */
+  .stars {
+    display: flex;
+    gap: 2px;
+  }
+  .star { color: var(--beige-dark); font-size: 13px; }
+  .star.on { color: #D4A843; }
+
+  /* PAGO */
+  .pago-bar {
+    margin-top: 8px;
+  }
+  .pago-track {
+    height: 5px;
+    background: var(--beige-dark);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .pago-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--olive);
+  }
+  .pago-nums {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--ink-hint);
+    margin-top: 3px;
+  }
+
+  /* AGENDA */
+  .cal-month {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .cal-month-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .cal-nav {
+    display: flex;
+    gap: 8px;
+  }
+  .cal-nav button {
+    background: var(--card);
+    border: 0.5px solid var(--beige-dark);
+    border-radius: 8px;
+    width: 30px; height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--ink-soft);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 16px;
+  }
+  .cal-dow {
+    text-align: center;
+    font-size: 10px;
+    color: var(--ink-hint);
+    padding: 4px 0;
+    letter-spacing: 0.5px;
+  }
+  .cal-day {
+    text-align: center;
+    padding: 6px 2px;
+    font-size: 12px;
+    color: var(--ink-mid);
+    border-radius: 8px;
+    position: relative;
+    cursor: pointer;
+  }
+  .cal-day.empty { color: transparent; }
+  .cal-day.today {
+    background: var(--ink);
+    color: var(--beige);
+    font-weight: 500;
+  }
+  .cal-day.has-apt::after {
+    content: '';
+    position: absolute;
+    bottom: 1px; left: 50%; transform: translateX(-50%);
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--terra);
+  }
+  .cal-day.today.has-apt::after { background: var(--terra-light); }
+
+  .agenda-list-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-hint);
+    margin-bottom: 8px;
+  }
+  .agenda-item {
+    display: flex;
+    gap: 12px;
+    background: var(--card);
+    border-radius: 12px;
+    border: 0.5px solid var(--beige-dark);
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+  .agenda-time-col {
+    text-align: center;
+    min-width: 40px;
+  }
+  .agenda-time {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--terra);
+    line-height: 1;
+  }
+  .agenda-ampm {
+    font-size: 10px;
+    color: var(--ink-hint);
+    margin-top: 2px;
+  }
+  .agenda-vline {
+    width: 0.5px;
+    background: var(--beige-dark);
+    align-self: stretch;
+  }
+  .agenda-info { flex: 1; }
+  .agenda-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .agenda-detail {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+</style>
+
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Ansep.Tattoo — agenda y proyectos de tatuajes</h2>
+
+<div style="background: var(--beige); min-height: 700px; font-family:'DM Sans',sans-serif;">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">Ansep<span>.</span>Tattoo</div>
+    <div class="brand-sub">estudio personal</div>
+  </div>
+
+  <!-- PRÓXIMO TATUAJE -->
+  <div class="next-card">
+    <div class="next-label">Próxima sesión</div>
+    <div class="next-name">Valentina Rojas</div>
+    <div class="next-meta">
+      <div class="next-meta-item"><i class="ti ti-calendar" aria-hidden="true"></i> Sáb 31 mayo</div>
+      <div class="next-meta-item"><i class="ti ti-clock" aria-hidden="true"></i> 15:00 hrs</div>
+    </div>
+    <div class="design-badge">
+      <div class="design-dot"></div>
+      Diseño en revisión
+    </div>
+  </div>
+
+  <!-- BARRA DE PROGRESO DISEÑO -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Progreso del diseño</span>
+      <span style="color: var(--terra); font-weight:500;">En revisión</span>
+    </div>
+    <div class="progress-steps">
+      <div class="step-pill done"></div>
+      <div class="step-pill done"></div>
+      <div class="step-pill current"></div>
+      <div class="step-pill"></div>
+      <div class="step-pill"></div>
+    </div>
+    <div style="display:flex; justify-content:space-between; margin-top:5px; font-size:9px; color:var(--ink-hint); letter-spacing:0.3px;">
+      <span>Pendiente</span><span>Bosquejo</span><span style="color:var(--terra)">Revisión</span><span>Listo</span><span>Stencil</span>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-wrap">
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('inicio')">Inicio</button>
+      <button class="tab" onclick="switchTab('proyectos')">Proyectos</button>
+      <button class="tab" onclick="switchTab('agenda')">Agenda</button>
+      <button class="tab" onclick="switchTab('cuidados')">Cuidados</button>
+      <button class="tab" onclick="switchTab('stats')">Estadísticas</button>
+      <button class="tab" onclick="switchTab('insumos')">Insumos</button>
+    </div>
+  </div>
+
+  <!-- TAB: INICIO -->
+  <div class="content active" id="tab-inicio">
+    <div class="section-header">
+      <div class="section-title">Resumen</div>
+      <button class="add-btn" onclick="sendPrompt('Agregar nuevo proyecto de tatuaje')"><i class="ti ti-plus" aria-hidden="true"></i> Nuevo proyecto</button>
+    </div>
+
+    <!-- Stats rápidas -->
+    <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; margin-bottom:14px;">
+      <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
+        <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Proyectos activos</div>
+        <div style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--terra);">4</div>
+      </div>
+      <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
+        <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Este mes</div>
+        <div style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--olive);">3</div>
+      </div>
+      <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
+        <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Por cobrar</div>
+        <div style="font-size:22px; font-family:'Playfair Display',serif; font-weight:700; color:var(--ink);">$85k</div>
+      </div>
+      <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
+        <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Retoques pend.</div>
+        <div style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--ink-soft);">1</div>
+      </div>
+    </div>
+
+    <!-- Próximos -->
+    <div class="section-title" style="margin-bottom:10px;">Esta semana</div>
+    <div class="agenda-item">
+      <div class="agenda-time-col">
+        <div class="agenda-time">15:00</div>
+        <div class="agenda-ampm">Sáb</div>
+      </div>
+      <div class="agenda-vline"></div>
+      <div class="agenda-info">
+        <div class="agenda-name">Valentina Rojas</div>
+        <div class="agenda-detail">Manga — brazo derecho · Sesión 1/3</div>
+      </div>
+      <span class="status-pill s-confirmado">Confirmado</span>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time-col">
+        <div class="agenda-time">11:00</div>
+        <div class="agenda-ampm">Dom</div>
+      </div>
+      <div class="agenda-vline"></div>
+      <div class="agenda-info">
+        <div class="agenda-name">Matías Fuentes</div>
+        <div class="agenda-detail">Geométrico — espalda · Sesión 2/2</div>
+      </div>
+      <span class="status-pill s-agendado">Agendado</span>
+    </div>
+  </div>
+
+  <!-- TAB: PROYECTOS -->
+  <div class="content" id="tab-proyectos">
+    <div class="section-header">
+      <div class="section-title">Proyectos</div>
+      <button class="add-btn" onclick="sendPrompt('Agregar nuevo proyecto de tatuaje')"><i class="ti ti-plus" aria-hidden="true"></i> Nuevo</button>
+    </div>
+
+    <!-- Filtros rápidos -->
+    <div style="display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; margin-bottom:14px; padding-bottom:2px;">
+      <button style="flex-shrink:0; background:var(--ink); color:var(--beige); border:none; border-radius:20px; padding:5px 14px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif;">Todos</button>
+      <button style="flex-shrink:0; background:var(--card); color:var(--ink-soft); border:0.5px solid var(--beige-dark); border-radius:20px; padding:5px 14px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif;">Agendados</button>
+      <button style="flex-shrink:0; background:var(--card); color:var(--ink-soft); border:0.5px solid var(--beige-dark); border-radius:20px; padding:5px 14px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif;">En diseño</button>
+      <button style="flex-shrink:0; background:var(--card); color:var(--ink-soft); border:0.5px solid var(--beige-dark); border-radius:20px; padding:5px 14px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif;">Tatuados</button>
+    </div>
+
+    <!-- Proyecto 1 -->
+    <div class="project-card">
+      <div class="pc-top">
+        <div>
+          <div class="pc-name">Valentina Rojas</div>
+          <div class="pc-ig">@vale.rojas · +569 8821 4433</div>
+        </div>
+        <span class="status-pill s-confirmado">Confirmado</span>
+      </div>
+      <div class="pc-row">
+        <span><i class="ti ti-calendar" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> 31 mayo · 15:00</span>
+        <span>Manga · Brazo derecho</span>
+      </div>
+      <div class="pc-row">
+        <span>Sesiones: 1 / 3</span>
+        <div class="stars">
+          <span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star">★</span>
+        </div>
+      </div>
+      <div class="pc-divider"></div>
+      <div style="font-size:10px; color:var(--ink-hint); letter-spacing:0.5px; margin-bottom:5px;">ESTADO DEL DISEÑO</div>
+      <div class="pc-design-row">
+        <div class="design-step done"></div>
+        <div class="design-step done"></div>
+        <div class="design-step active"></div>
+        <div class="design-step"></div>
+        <div class="design-step"></div>
+      </div>
+      <div class="pc-design-labels">
+        <div class="design-lbl">Pend.</div>
+        <div class="design-lbl">Bosq.</div>
+        <div class="design-lbl active">Revis.</div>
+        <div class="design-lbl">Listo</div>
+        <div class="design-lbl">Stenc.</div>
+      </div>
+      <div class="pc-divider"></div>
+      <div style="font-size:10px; color:var(--ink-hint); letter-spacing:0.5px; margin-bottom:5px;">PAGO</div>
+      <div class="pago-bar">
+        <div class="pago-track">
+          <div class="pago-fill" style="width: 50%;"></div>
+        </div>
+        <div class="pago-nums">
+          <span>Abono: $75.000</span>
+          <span>Total: $150.000</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proyecto 2 -->
+    <div class="project-card">
+      <div class="pc-top">
+        <div>
+          <div class="pc-name">Matías Fuentes</div>
+          <div class="pc-ig">@mati_f · +569 9034 7721</div>
+        </div>
+        <span class="status-pill s-agendado">Agendado</span>
+      </div>
+      <div class="pc-row">
+        <span><i class="ti ti-calendar" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> 1 jun · 11:00</span>
+        <span>Geométrico · Espalda</span>
+      </div>
+      <div class="pc-row">
+        <span>Sesiones: 2 / 2</span>
+        <div class="stars">
+          <span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span>
+        </div>
+      </div>
+      <div class="pc-divider"></div>
+      <div style="font-size:10px; color:var(--ink-hint); letter-spacing:0.5px; margin-bottom:5px;">ESTADO DEL DISEÑO</div>
+      <div class="pc-design-row">
+        <div class="design-step done"></div>
+        <div class="design-step done"></div>
+        <div class="design-step done"></div>
+        <div class="design-step done"></div>
+        <div class="design-step active"></div>
+      </div>
+      <div class="pc-design-labels">
+        <div class="design-lbl">Pend.</div>
+        <div class="design-lbl">Bosq.</div>
+        <div class="design-lbl">Revis.</div>
+        <div class="design-lbl">Listo</div>
+        <div class="design-lbl active">Stenc.</div>
+      </div>
+      <div class="pc-divider"></div>
+      <div style="font-size:10px; color:var(--ink-hint); letter-spacing:0.5px; margin-bottom:5px;">PAGO</div>
+      <div class="pago-bar">
+        <div class="pago-track">
+          <div class="pago-fill" style="width: 100%;"></div>
+        </div>
+        <div class="pago-nums">
+          <span style="color:var(--olive); font-weight:500;">Pagado ✓</span>
+          <span>Total: $200.000</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proyecto 3 -->
+    <div class="project-card">
+      <div class="pc-top">
+        <div>
+          <div class="pc-name">Javiera Mena</div>
+          <div class="pc-ig">@javi.ink · +569 7612 0099</div>
+        </div>
+        <span class="status-pill s-retoque">Retoque pend.</span>
+      </div>
+      <div class="pc-row">
+        <span><i class="ti ti-calendar" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> Por agendar</span>
+        <span>Blackwork · Antebrazo</span>
+      </div>
+      <div class="pc-row">
+        <span>Sesiones: 1 / 1</span>
+        <div class="stars">
+          <span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star">★</span>
+        </div>
+      </div>
+      <div class="pc-divider"></div>
+      <div class="pago-bar">
+        <div class="pago-track">
+          <div class="pago-fill" style="width:80%; background:var(--terra);"></div>
+        </div>
+        <div class="pago-nums">
+          <span>Por pagar: $18.000</span>
+          <span>Total: $90.000</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: AGENDA -->
+  <div class="content" id="tab-agenda">
+    <div class="cal-month">
+      <div class="cal-month-name">Mayo 2025</div>
+      <div class="cal-nav">
+        <button><i class="ti ti-chevron-left" aria-label="Mes anterior"></i></button>
+        <button><i class="ti ti-chevron-right" aria-label="Mes siguiente"></i></button>
+      </div>
+    </div>
+
+    <div class="cal-grid">
+      <div class="cal-dow">L</div><div class="cal-dow">M</div><div class="cal-dow">X</div><div class="cal-dow">J</div><div class="cal-dow">V</div><div class="cal-dow">S</div><div class="cal-dow">D</div>
+      <div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day empty"></div>
+      <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day has-apt">3</div><div class="cal-day">4</div>
+      <div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
+      <div class="cal-day">8</div><div class="cal-day has-apt">9</div><div class="cal-day">10</div><div class="cal-day">11</div>
+      <div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div>
+      <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day has-apt">17</div><div class="cal-day">18</div>
+      <div class="cal-day today">19</div><div class="cal-day">20</div><div class="cal-day">21</div>
+      <div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div>
+      <div class="cal-day has-apt">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div>
+      <div class="cal-day empty"></div><div class="cal-day empty"></div><div class="cal-day has-apt">31</div>
+    </div>
+
+    <div class="agenda-list-label">Próximas citas</div>
+
+    <div class="agenda-item">
+      <div class="agenda-time-col">
+        <div class="agenda-time">15:00</div>
+        <div class="agenda-ampm">Sáb 31</div>
+      </div>
+      <div class="agenda-vline"></div>
+      <div class="agenda-info">
+        <div class="agenda-name">Valentina Rojas</div>
+        <div class="agenda-detail">Manga · Brazo derecho · Ses. 1/3</div>
+      </div>
+      <span class="status-pill s-confirmado">Conf.</span>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time-col">
+        <div class="agenda-time">11:00</div>
+        <div class="agenda-ampm">Dom 1</div>
+      </div>
+      <div class="agenda-vline"></div>
+      <div class="agenda-info">
+        <div class="agenda-name">Matías Fuentes</div>
+        <div class="agenda-detail">Geométrico · Espalda · Ses. 2/2</div>
+      </div>
+      <span class="status-pill s-agendado">Agend.</span>
+    </div>
+    <div style="text-align:center; padding: 16px 0;">
+      <button style="background:none; border:0.5px solid var(--beige-dark); border-radius:20px; padding:8px 20px; font-size:12px; color:var(--ink-soft); cursor:pointer; font-family:'DM Sans',sans-serif;" onclick="sendPrompt('Ver todas las citas de la agenda')">Ver todas las citas ↗</button>
+    </div>
+  </div>
+
+  <!-- TAB: CUIDADOS -->
+  <div class="content" id="tab-cuidados">
+    <div class="section-title" style="margin-bottom:12px;">Instrucciones para clientes</div>
+    <div style="background:var(--card); border-radius:14px; border:0.5px solid var(--beige-dark); padding:14px 16px; margin-bottom:10px;">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+        <div style="background:var(--terra-faint); border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;">
+          <i class="ti ti-arrow-up-circle" style="font-size:16px; color:var(--terra);" aria-hidden="true"></i>
+        </div>
+        <div style="font-weight:500; font-size:14px;">Antes del tatuaje</div>
+      </div>
+      <div style="font-size:12px; color:var(--ink-soft); line-height:1.7;">
+        Hidrata bien la zona los días previos. Evita alcohol 24 hrs antes. Llega con ropa cómoda y come algo antes de la sesión.
+      </div>
+      <button style="margin-top:10px; background:none; border:0.5px solid var(--beige-dark); border-radius:8px; padding:6px 12px; font-size:11px; color:var(--olive); cursor:pointer; font-family:'DM Sans',sans-serif;" onclick="sendPrompt('Editar instrucciones pre-tatuaje')"><i class="ti ti-edit" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> Editar · Copiar</button>
+    </div>
+    <div style="background:var(--card); border-radius:14px; border:0.5px solid var(--beige-dark); padding:14px 16px;">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+        <div style="background:var(--olive-faint); border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;">
+          <i class="ti ti-heart" style="font-size:16px; color:var(--olive);" aria-hidden="true"></i>
+        </div>
+        <div style="font-weight:500; font-size:14px;">Después del tatuaje</div>
+      </div>
+      <div style="font-size:12px; color:var(--ink-soft); line-height:1.7;">
+        Lava con jabón neutro 2x al día. Aplica crema cicatrizante en capa fina. No expongas al sol directo por 3 semanas.
+      </div>
+      <button style="margin-top:10px; background:none; border:0.5px solid var(--beige-dark); border-radius:8px; padding:6px 12px; font-size:11px; color:var(--olive); cursor:pointer; font-family:'DM Sans',sans-serif;" onclick="sendPrompt('Editar instrucciones post-tatuaje')"><i class="ti ti-edit" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> Editar · Copiar</button>
+    </div>
+  </div>
+
+  <!-- TAB: ESTADÍSTICAS -->
+  <div class="content" id="tab-stats">
+    <div class="section-title" style="margin-bottom:12px;">Resumen del mes</div>
+    <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; margin-bottom:16px;">
+      <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
+        <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Tatuajes</div>
+        <div style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--terra);">7</div>
+        <div style="font-size:10px; color:var(--olive);">+2 vs mes anterior</div>
+      </div>
+      <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
+        <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Ingresos</div>
+        <div style="font-size:22px; font-family:'Playfair Display',serif; font-weight:700; color:var(--olive);">$980k</div>
+        <div style="font-size:10px; color:var(--olive);">+15% vs mes ant.</div>
+      </div>
+    </div>
+    <div class="section-title" style="margin-bottom:10px;">Estilos más frecuentes</div>
+    <div style="background:var(--card); border-radius:14px; border:0.5px solid var(--beige-dark); padding:14px 16px;">
+      <div style="margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;">
+          <span style="color:var(--ink-mid); font-weight:500;">Blackwork</span><span style="color:var(--ink-hint);">40%</span>
+        </div>
+        <div style="height:5px; background:var(--beige-dark); border-radius:3px;"><div style="height:100%; width:40%; background:var(--ink); border-radius:3px;"></div></div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;">
+          <span style="color:var(--ink-mid); font-weight:500;">Geométrico</span><span style="color:var(--ink-hint);">30%</span>
+        </div>
+        <div style="height:5px; background:var(--beige-dark); border-radius:3px;"><div style="height:100%; width:30%; background:var(--olive); border-radius:3px;"></div></div>
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;">
+          <span style="color:var(--ink-mid); font-weight:500;">Linework</span><span style="color:var(--ink-hint);">20%</span>
+        </div>
+        <div style="height:5px; background:var(--beige-dark); border-radius:3px;"><div style="height:100%; width:20%; background:var(--terra); border-radius:3px;"></div></div>
+      </div>
+      <div>
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;">
+          <span style="color:var(--ink-mid); font-weight:500;">Acuarela</span><span style="color:var(--ink-hint);">10%</span>
+        </div>
+        <div style="height:5px; background:var(--beige-dark); border-radius:3px;"><div style="height:100%; width:10%; background:var(--ink-hint); border-radius:3px;"></div></div>
+      </div>
+    </div>
+    <div style="text-align:center; padding:16px 0;">
+      <button style="background:none; border:0.5px solid var(--beige-dark); border-radius:20px; padding:8px 20px; font-size:12px; color:var(--ink-soft); cursor:pointer; font-family:'DM Sans',sans-serif;" onclick="sendPrompt('Ver estadísticas completas y detalladas')">Ver estadísticas completas ↗</button>
+    </div>
+  </div>
+
+  <!-- TAB: INSUMOS -->
+  <div class="content" id="tab-insumos">
+    <div class="section-header">
+      <div class="section-title">Insumos</div>
+      <button class="add-btn" onclick="sendPrompt('Agregar compra de insumos')"><i class="ti ti-plus" aria-hidden="true"></i> Agregar</button>
+    </div>
+    <div style="background:var(--card); border-radius:14px; border:0.5px solid var(--beige-dark); overflow:hidden;">
+      <div style="padding:10px 16px; border-bottom:0.5px solid var(--beige-dark); display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:13px; font-weight:500; color:var(--ink);">Tinta negra Intenze</div>
+          <div style="font-size:11px; color:var(--ink-hint); margin-top:1px;">Comprado en TattooSupply · 12 may</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13px; font-weight:500; color:var(--ink);">$18.500</div>
+          <div style="font-size:10px; color:var(--olive);">2 unidades</div>
+        </div>
+      </div>
+      <div style="padding:10px 16px; border-bottom:0.5px solid var(--beige-dark); display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:13px; font-weight:500; color:var(--ink);">Agujas RL 7 — caja 50u</div>
+          <div style="font-size:11px; color:var(--ink-hint); margin-top:1px;">Comprado en MercadoL. · 8 may</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13px; font-weight:500; color:var(--ink);">$32.000</div>
+          <div style="font-size:10px; color:var(--olive);">1 caja</div>
+        </div>
+      </div>
+      <div style="padding:10px 16px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <div style="font-size:13px; font-weight:500; color:var(--ink);">Film de protección 10m</div>
+          <div style="font-size:11px; color:var(--ink-hint); margin-top:1px;">Comprado en TattooSupply · 1 may</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13px; font-weight:500; color:var(--ink);">$12.000</div>
+          <div style="font-size:10px; color:var(--ink-hint);">1 rollo</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--olive-faint); border-radius:12px; padding:12px 16px; margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-size:12px; color:var(--olive); font-weight:500;">Total gastado este mes</span>
+      <span style="font-size:16px; font-family:'Playfair Display',serif; font-weight:700; color:var(--olive);">$62.500</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+</script>
