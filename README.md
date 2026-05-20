@@ -1,2 +1,0 @@
-# app
-Ansep.Tattoo app
