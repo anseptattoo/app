@@ -33,44 +33,21 @@
 
   /* HEADER */
   .header {
-    background: var(--ink);
-    padding: 28px 20px 20px;
+    background: var(--beige);
+    padding: 24px 20px 16px;
     position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -30px; right: -30px;
-    width: 120px; height: 120px;
-    border-radius: 50%;
-    border: 1px solid rgba(242,237,228,0.08);
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    top: 10px; right: 10px;
-    width: 70px; height: 70px;
-    border-radius: 50%;
-    border: 1px solid rgba(242,237,228,0.05);
+    border-bottom: 0.5px solid var(--beige-dark);
   }
   .brand {
     font-family: 'Playfair Display', serif;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 700;
-    color: var(--beige);
-    letter-spacing: 1px;
+    color: var(--ink);
+    letter-spacing: 0.5px;
     line-height: 1;
   }
   .brand span {
-    color: var(--terra-light);
-  }
-  .brand-sub {
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: var(--ink-hint);
-    text-transform: uppercase;
-    margin-top: 4px;
+    color: var(--terra);
   }
 
   /* NEXT SESSION CARD */
@@ -471,7 +448,6 @@
   <!-- HEADER -->
   <div class="header">
     <div class="brand">Ansep<span>.</span>Tattoo</div>
-    <div class="brand-sub">estudio personal</div>
   </div>
 
   <!-- PRÓXIMO TATUAJE -->
@@ -488,33 +464,15 @@
     </div>
   </div>
 
-  <!-- BARRA DE PROGRESO DISEÑO -->
-  <div class="progress-wrap">
-    <div class="progress-label">
-      <span>Progreso del diseño</span>
-      <span style="color: var(--terra); font-weight:500;">En revisión</span>
-    </div>
-    <div class="progress-steps">
-      <div class="step-pill done"></div>
-      <div class="step-pill done"></div>
-      <div class="step-pill current"></div>
-      <div class="step-pill"></div>
-      <div class="step-pill"></div>
-    </div>
-    <div style="display:flex; justify-content:space-between; margin-top:5px; font-size:9px; color:var(--ink-hint); letter-spacing:0.3px;">
-      <span>Pendiente</span><span>Bosquejo</span><span style="color:var(--terra)">Revisión</span><span>Listo</span><span>Stencil</span>
-    </div>
-  </div>
-
   <!-- TABS -->
   <div class="tabs-wrap">
     <div class="tabs">
-      <button class="tab active" onclick="switchTab('inicio')">Inicio</button>
+      <button class="tab active" onclick="switchTab('inicio')">🏠</button>
       <button class="tab" onclick="switchTab('proyectos')">Proyectos</button>
       <button class="tab" onclick="switchTab('agenda')">Agenda</button>
-      <button class="tab" onclick="switchTab('cuidados')">Cuidados</button>
-      <button class="tab" onclick="switchTab('stats')">Estadísticas</button>
       <button class="tab" onclick="switchTab('insumos')">Insumos</button>
+      <button class="tab" onclick="switchTab('stats')">Estadísticas</button>
+      <button class="tab" onclick="switchTab('guias')">Guías</button>
     </div>
   </div>
 
@@ -528,20 +486,24 @@
     <!-- Stats rápidas -->
     <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; margin-bottom:14px;">
       <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
-        <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Proyectos activos</div>
+        <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">En curso</div>
         <div style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--terra);">4</div>
+        <div style="font-size:10px; color:var(--ink-hint);">proyectos activos</div>
       </div>
       <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
         <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Este mes</div>
         <div style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--olive);">3</div>
+        <div style="font-size:10px; color:var(--ink-hint);">tatuajes realizados</div>
       </div>
       <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
         <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Por cobrar</div>
         <div style="font-size:22px; font-family:'Playfair Display',serif; font-weight:700; color:var(--ink);">$85k</div>
+        <div style="font-size:10px; color:var(--terra);">saldo pendiente</div>
       </div>
       <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
-        <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Retoques pend.</div>
+        <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Retoques</div>
         <div style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--ink-soft);">1</div>
+        <div style="font-size:10px; color:var(--ink-hint);">por agendar</div>
       </div>
     </div>
 
@@ -568,6 +530,18 @@
       <div class="agenda-info">
         <div class="agenda-name">Matías Fuentes</div>
         <div class="agenda-detail">Geométrico — espalda · Sesión 2/2</div>
+      </div>
+      <span class="status-pill s-agendado">Agendado</span>
+    </div>
+    <div class="agenda-item">
+      <div class="agenda-time-col">
+        <div class="agenda-time">14:00</div>
+        <div class="agenda-ampm">Lun</div>
+      </div>
+      <div class="agenda-vline"></div>
+      <div class="agenda-info">
+        <div class="agenda-name">Camila Torres</div>
+        <div class="agenda-detail">Linework — costado · Sesión 1/1</div>
       </div>
       <span class="status-pill s-agendado">Agendado</span>
     </div>
@@ -771,32 +745,56 @@
     </div>
   </div>
 
-  <!-- TAB: CUIDADOS -->
-  <div class="content" id="tab-cuidados">
-    <div class="section-title" style="margin-bottom:12px;">Instrucciones para clientes</div>
+  <!-- TAB: GUÍAS -->
+  <div class="content" id="tab-guias">
+    <div class="section-title" style="margin-bottom:12px;">Guías para clientes</div>
     <div style="background:var(--card); border-radius:14px; border:0.5px solid var(--beige-dark); padding:14px 16px; margin-bottom:10px;">
       <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
         <div style="background:var(--terra-faint); border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;">
           <i class="ti ti-arrow-up-circle" style="font-size:16px; color:var(--terra);" aria-hidden="true"></i>
         </div>
-        <div style="font-weight:500; font-size:14px;">Antes del tatuaje</div>
+        <div style="font-weight:500; font-size:14px;">Indicaciones previas</div>
       </div>
       <div style="font-size:12px; color:var(--ink-soft); line-height:1.7;">
         Hidrata bien la zona los días previos. Evita alcohol 24 hrs antes. Llega con ropa cómoda y come algo antes de la sesión.
       </div>
-      <button style="margin-top:10px; background:none; border:0.5px solid var(--beige-dark); border-radius:8px; padding:6px 12px; font-size:11px; color:var(--olive); cursor:pointer; font-family:'DM Sans',sans-serif;" onclick="sendPrompt('Editar instrucciones pre-tatuaje')"><i class="ti ti-edit" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> Editar · Copiar</button>
+      <button style="margin-top:10px; background:none; border:0.5px solid var(--beige-dark); border-radius:8px; padding:6px 12px; font-size:11px; color:var(--olive); cursor:pointer; font-family:'DM Sans',sans-serif;" onclick="sendPrompt('Editar guía de indicaciones previas')"><i class="ti ti-edit" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> Editar · Copiar</button>
     </div>
-    <div style="background:var(--card); border-radius:14px; border:0.5px solid var(--beige-dark); padding:14px 16px;">
+    <div style="background:var(--card); border-radius:14px; border:0.5px solid var(--beige-dark); padding:14px 16px; margin-bottom:10px;">
       <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
         <div style="background:var(--olive-faint); border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;">
           <i class="ti ti-heart" style="font-size:16px; color:var(--olive);" aria-hidden="true"></i>
         </div>
-        <div style="font-weight:500; font-size:14px;">Después del tatuaje</div>
+        <div style="font-weight:500; font-size:14px;">Cuidados post-tatuaje</div>
       </div>
       <div style="font-size:12px; color:var(--ink-soft); line-height:1.7;">
         Lava con jabón neutro 2x al día. Aplica crema cicatrizante en capa fina. No expongas al sol directo por 3 semanas.
       </div>
-      <button style="margin-top:10px; background:none; border:0.5px solid var(--beige-dark); border-radius:8px; padding:6px 12px; font-size:11px; color:var(--olive); cursor:pointer; font-family:'DM Sans',sans-serif;" onclick="sendPrompt('Editar instrucciones post-tatuaje')"><i class="ti ti-edit" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> Editar · Copiar</button>
+      <button style="margin-top:10px; background:none; border:0.5px solid var(--beige-dark); border-radius:8px; padding:6px 12px; font-size:11px; color:var(--olive); cursor:pointer; font-family:'DM Sans',sans-serif;" onclick="sendPrompt('Editar guía de cuidados post-tatuaje')"><i class="ti ti-edit" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> Editar · Copiar</button>
+    </div>
+    <div style="background:var(--card); border-radius:14px; border:0.5px solid var(--beige-dark); padding:14px 16px; margin-bottom:10px;">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+        <div style="background:var(--beige-dark); border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;">
+          <i class="ti ti-refresh" style="font-size:16px; color:var(--ink-soft);" aria-hidden="true"></i>
+        </div>
+        <div style="font-weight:500; font-size:14px;">Cicatrización</div>
+      </div>
+      <div style="font-size:12px; color:var(--ink-soft); line-height:1.7;">
+        La piel pasa por distintas etapas: enrojecimiento (días 1–3), descamación (días 4–10) y asentamiento del color (semanas 3–6). Todo es normal.
+      </div>
+      <button style="margin-top:10px; background:none; border:0.5px solid var(--beige-dark); border-radius:8px; padding:6px 12px; font-size:11px; color:var(--olive); cursor:pointer; font-family:'DM Sans',sans-serif;" onclick="sendPrompt('Editar guía de cicatrización')"><i class="ti ti-edit" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> Editar · Copiar</button>
+    </div>
+    <div style="background:var(--card); border-radius:14px; border:0.5px solid var(--beige-dark); padding:14px 16px;">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+        <div style="background:var(--olive-faint); border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center;">
+          <i class="ti ti-map-pin" style="font-size:16px; color:var(--olive);" aria-hidden="true"></i>
+        </div>
+        <div style="font-weight:500; font-size:14px;">Cómo llegar al estudio</div>
+      </div>
+      <div style="font-size:12px; color:var(--ink-soft); line-height:1.7;">
+        Estacionamiento en calle lateral. Tocar timbre al llegar. Puntualidad importante — si llegas tarde, avisa con anticipación.
+      </div>
+      <button style="margin-top:10px; background:none; border:0.5px solid var(--beige-dark); border-radius:8px; padding:6px 12px; font-size:11px; color:var(--olive); cursor:pointer; font-family:'DM Sans',sans-serif;" onclick="sendPrompt('Editar guía de indicaciones al estudio')"><i class="ti ti-edit" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> Editar · Copiar</button>
     </div>
   </div>
 
@@ -897,7 +895,7 @@
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
-  event.target.classList.add('active');
+  event.currentTarget.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
 }
 </script>
