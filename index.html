@@ -407,6 +407,299 @@
     margin-bottom: 8px;
     align-items: center;
   }
+
+  /* ── MODAL OVERLAY ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(28,28,26,0.45);
+    z-index: 100;
+    backdrop-filter: blur(2px);
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.open {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  /* ── BOTTOM SHEET ── */
+  .sheet {
+    background: var(--surface);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 390px;
+    max-height: 92vh;
+    overflow-y: auto;
+    animation: slideUp 0.32s cubic-bezier(0.32,0.72,0,1);
+    padding-bottom: 32px;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  .sheet-handle {
+    width: 36px; height: 4px;
+    background: var(--beige-dark);
+    border-radius: 2px;
+    margin: 12px auto 0;
+  }
+
+  .sheet-header {
+    padding: 16px 20px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.5px solid var(--beige-dark);
+  }
+  .sheet-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .sheet-close {
+    background: var(--beige-dark);
+    border: none;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ── STEP INDICATOR ── */
+  .step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 14px 20px 0;
+  }
+  .step-dot {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    transition: all 0.25s;
+    flex-shrink: 0;
+  }
+  .step-dot.done    { background: var(--olive); color: white; }
+  .step-dot.active  { background: var(--terra); color: white; }
+  .step-dot.pending { background: var(--beige-dark); color: var(--ink-hint); }
+  .step-line {
+    flex: 1;
+    height: 1.5px;
+    background: var(--beige-dark);
+    transition: background 0.25s;
+  }
+  .step-line.done { background: var(--olive); }
+  .step-label-row {
+    display: flex;
+    padding: 4px 20px 0;
+    justify-content: space-between;
+  }
+  .step-lbl {
+    font-size: 8px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-hint);
+    text-align: center;
+    width: 24px;
+  }
+  .step-lbl.active { color: var(--terra); font-weight: 600; }
+
+  /* ── FORM STEPS ── */
+  .form-step { display: none; padding: 16px 20px 8px; }
+  .form-step.active { display: block; }
+
+  .fld-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .fld-input {
+    width: 100%;
+    background: var(--card);
+    border: 0.5px solid var(--beige-dark);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 14px;
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .fld-input:focus { border-color: var(--terra); }
+  .fld-group { margin-bottom: 14px; }
+  .fld-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .fld-hint {
+    font-size: 11px;
+    color: var(--ink-hint);
+    margin-top: 4px;
+  }
+
+  /* ── CHIP SELECTOR ── */
+  .chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 14px;
+  }
+  .chip {
+    padding: 7px 13px;
+    border-radius: 20px;
+    border: 0.5px solid var(--beige-dark);
+    background: var(--card);
+    font-size: 12px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: 'DM Sans', sans-serif;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .chip.selected {
+    background: var(--terra);
+    border-color: var(--terra);
+    color: white;
+    font-weight: 500;
+  }
+
+  /* ── DESIGN STAGE SELECTOR ── */
+  .design-stage-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .dstage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 4px;
+    border-radius: 10px;
+    border: 0.5px solid var(--beige-dark);
+    background: var(--card);
+    cursor: pointer;
+    transition: all 0.18s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .dstage-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--beige-dark);
+    transition: background 0.18s;
+  }
+  .dstage-name {
+    font-size: 9px;
+    color: var(--ink-hint);
+    text-align: center;
+    line-height: 1.2;
+  }
+  .dstage.selected {
+    border-color: var(--terra);
+    background: var(--terra-faint);
+  }
+  .dstage.selected .dstage-dot { background: var(--terra); }
+  .dstage.selected .dstage-name { color: var(--terra); font-weight: 600; }
+
+  /* ── TEXTAREA ── */
+  .fld-textarea {
+    width: 100%;
+    background: var(--card);
+    border: 0.5px solid var(--beige-dark);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 14px;
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    resize: none;
+    min-height: 72px;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .fld-textarea:focus { border-color: var(--terra); }
+
+  /* ── SHEET FOOTER ── */
+  .sheet-footer {
+    padding: 12px 20px 0;
+    display: flex;
+    gap: 10px;
+    border-top: 0.5px solid var(--beige-dark);
+    margin-top: 4px;
+  }
+  .btn-back {
+    flex: 1;
+    padding: 12px;
+    background: var(--card);
+    border: 0.5px solid var(--beige-dark);
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-next {
+    flex: 2;
+    padding: 12px;
+    background: var(--terra);
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+  }
+  .btn-next:active { background: var(--terra-light); }
+  .btn-next.success {
+    background: var(--olive);
+  }
+
+  /* ── SUCCESS STATE ── */
+  .success-screen {
+    display: none;
+    padding: 32px 20px;
+    text-align: center;
+  }
+  .success-screen.active { display: block; }
+  .success-icon {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: var(--olive-faint);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 26px;
+  }
+  .success-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .success-sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
   .agenda-time-col {
     text-align: center;
     min-width: 40px;
@@ -480,7 +773,7 @@
   <div class="content active" id="tab-inicio">
     <div class="section-header">
       <div class="section-title">Resumen</div>
-      <button class="add-btn" onclick="sendPrompt('Agregar nuevo proyecto de tatuaje')"><i class="ti ti-plus" aria-hidden="true"></i> Nuevo proyecto</button>
+      <button class="add-btn" onclick="openModal()"><i class="ti ti-plus" aria-hidden="true"></i> Nuevo proyecto</button>
     </div>
 
     <!-- Stats rápidas -->
@@ -551,7 +844,7 @@
   <div class="content" id="tab-proyectos">
     <div class="section-header">
       <div class="section-title">Proyectos</div>
-      <button class="add-btn" onclick="sendPrompt('Agregar nuevo proyecto de tatuaje')"><i class="ti ti-plus" aria-hidden="true"></i> Nuevo</button>
+      <button class="add-btn" onclick="openModal()"><i class="ti ti-plus" aria-hidden="true"></i> Nuevo</button>
     </div>
 
     <!-- Filtros rápidos -->
@@ -562,132 +855,8 @@
       <button style="flex-shrink:0; background:var(--card); color:var(--ink-soft); border:0.5px solid var(--beige-dark); border-radius:20px; padding:5px 14px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif;">Tatuados</button>
     </div>
 
-    <!-- Proyecto 1 -->
-    <div class="project-card">
-      <div class="pc-top">
-        <div>
-          <div class="pc-name">Valentina Rojas</div>
-          <div class="pc-ig">@vale.rojas · +569 8821 4433</div>
-        </div>
-        <span class="status-pill s-confirmado">Confirmado</span>
-      </div>
-      <div class="pc-row">
-        <span><i class="ti ti-calendar" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> 31 mayo · 15:00</span>
-        <span>Manga · Brazo derecho</span>
-      </div>
-      <div class="pc-row">
-        <span>Sesiones: 1 / 3</span>
-        <div class="stars">
-          <span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star">★</span>
-        </div>
-      </div>
-      <div class="pc-divider"></div>
-      <div style="font-size:10px; color:var(--ink-hint); letter-spacing:0.5px; margin-bottom:5px;">ESTADO DEL DISEÑO</div>
-      <div class="pc-design-row">
-        <div class="design-step done"></div>
-        <div class="design-step done"></div>
-        <div class="design-step active"></div>
-        <div class="design-step"></div>
-        <div class="design-step"></div>
-      </div>
-      <div class="pc-design-labels">
-        <div class="design-lbl">Pend.</div>
-        <div class="design-lbl">Bosq.</div>
-        <div class="design-lbl active">Revis.</div>
-        <div class="design-lbl">Listo</div>
-        <div class="design-lbl">Stenc.</div>
-      </div>
-      <div class="pc-divider"></div>
-      <div style="font-size:10px; color:var(--ink-hint); letter-spacing:0.5px; margin-bottom:5px;">PAGO</div>
-      <div class="pago-bar">
-        <div class="pago-track">
-          <div class="pago-fill" style="width: 50%;"></div>
-        </div>
-        <div class="pago-nums">
-          <span>Abono: $75.000</span>
-          <span>Total: $150.000</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Proyecto 2 -->
-    <div class="project-card">
-      <div class="pc-top">
-        <div>
-          <div class="pc-name">Matías Fuentes</div>
-          <div class="pc-ig">@mati_f · +569 9034 7721</div>
-        </div>
-        <span class="status-pill s-agendado">Agendado</span>
-      </div>
-      <div class="pc-row">
-        <span><i class="ti ti-calendar" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> 1 jun · 11:00</span>
-        <span>Geométrico · Espalda</span>
-      </div>
-      <div class="pc-row">
-        <span>Sesiones: 2 / 2</span>
-        <div class="stars">
-          <span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span>
-        </div>
-      </div>
-      <div class="pc-divider"></div>
-      <div style="font-size:10px; color:var(--ink-hint); letter-spacing:0.5px; margin-bottom:5px;">ESTADO DEL DISEÑO</div>
-      <div class="pc-design-row">
-        <div class="design-step done"></div>
-        <div class="design-step done"></div>
-        <div class="design-step done"></div>
-        <div class="design-step done"></div>
-        <div class="design-step active"></div>
-      </div>
-      <div class="pc-design-labels">
-        <div class="design-lbl">Pend.</div>
-        <div class="design-lbl">Bosq.</div>
-        <div class="design-lbl">Revis.</div>
-        <div class="design-lbl">Listo</div>
-        <div class="design-lbl active">Stenc.</div>
-      </div>
-      <div class="pc-divider"></div>
-      <div style="font-size:10px; color:var(--ink-hint); letter-spacing:0.5px; margin-bottom:5px;">PAGO</div>
-      <div class="pago-bar">
-        <div class="pago-track">
-          <div class="pago-fill" style="width: 100%;"></div>
-        </div>
-        <div class="pago-nums">
-          <span style="color:var(--olive); font-weight:500;">Pagado ✓</span>
-          <span>Total: $200.000</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Proyecto 3 -->
-    <div class="project-card">
-      <div class="pc-top">
-        <div>
-          <div class="pc-name">Javiera Mena</div>
-          <div class="pc-ig">@javi.ink · +569 7612 0099</div>
-        </div>
-        <span class="status-pill s-retoque">Retoque pend.</span>
-      </div>
-      <div class="pc-row">
-        <span><i class="ti ti-calendar" style="font-size:12px; vertical-align:-1px;" aria-hidden="true"></i> Por agendar</span>
-        <span>Blackwork · Antebrazo</span>
-      </div>
-      <div class="pc-row">
-        <span>Sesiones: 1 / 1</span>
-        <div class="stars">
-          <span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star on">★</span><span class="star">★</span>
-        </div>
-      </div>
-      <div class="pc-divider"></div>
-      <div class="pago-bar">
-        <div class="pago-track">
-          <div class="pago-fill" style="width:80%; background:var(--terra);"></div>
-        </div>
-        <div class="pago-nums">
-          <span>Por pagar: $18.000</span>
-          <span>Total: $90.000</span>
-        </div>
-      </div>
-    </div>
+    <!-- Lista dinámica de proyectos -->
+    <div id="proyectos-list"></div>
   </div>
 
   <!-- TAB: AGENDA -->
@@ -849,53 +1018,677 @@
   <div class="content" id="tab-insumos">
     <div class="section-header">
       <div class="section-title">Insumos</div>
-      <button class="add-btn" onclick="sendPrompt('Agregar compra de insumos')"><i class="ti ti-plus" aria-hidden="true"></i> Agregar</button>
+      <button class="add-btn" onclick="openModalInsumo()"><i class="ti ti-plus" aria-hidden="true"></i> Agregar</button>
     </div>
-    <div style="background:var(--card); border-radius:14px; border:0.5px solid var(--beige-dark); overflow:hidden;">
-      <div style="padding:10px 16px; border-bottom:0.5px solid var(--beige-dark); display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <div style="font-size:13px; font-weight:500; color:var(--ink);">Tinta negra Intenze</div>
-          <div style="font-size:11px; color:var(--ink-hint); margin-top:1px;">Comprado en TattooSupply · 12 may</div>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-size:13px; font-weight:500; color:var(--ink);">$18.500</div>
-          <div style="font-size:10px; color:var(--olive);">2 unidades</div>
-        </div>
-      </div>
-      <div style="padding:10px 16px; border-bottom:0.5px solid var(--beige-dark); display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <div style="font-size:13px; font-weight:500; color:var(--ink);">Agujas RL 7 — caja 50u</div>
-          <div style="font-size:11px; color:var(--ink-hint); margin-top:1px;">Comprado en MercadoL. · 8 may</div>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-size:13px; font-weight:500; color:var(--ink);">$32.000</div>
-          <div style="font-size:10px; color:var(--olive);">1 caja</div>
-        </div>
-      </div>
-      <div style="padding:10px 16px; display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <div style="font-size:13px; font-weight:500; color:var(--ink);">Film de protección 10m</div>
-          <div style="font-size:11px; color:var(--ink-hint); margin-top:1px;">Comprado en TattooSupply · 1 may</div>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-size:13px; font-weight:500; color:var(--ink);">$12.000</div>
-          <div style="font-size:10px; color:var(--ink-hint);">1 rollo</div>
-        </div>
-      </div>
-    </div>
-    <div style="background:var(--olive-faint); border-radius:12px; padding:12px 16px; margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+    <div id="insumos-list"></div>
+    <div id="insumos-total" style="display:none; background:var(--olive-faint); border-radius:12px; padding:12px 16px; margin-top:12px; display:none; justify-content:space-between; align-items:center;">
       <span style="font-size:12px; color:var(--olive); font-weight:500;">Total gastado este mes</span>
-      <span style="font-size:16px; font-family:'Playfair Display',serif; font-weight:700; color:var(--olive);">$62.500</span>
+      <span id="insumos-total-val" style="font-size:16px; font-family:'Playfair Display',serif; font-weight:700; color:var(--olive);">$0</span>
     </div>
   </div>
 
 </div>
 
+<!-- ══════════════════════════════════════
+     MODAL: NUEVO PROYECTO
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modalNuevoProyecto" onclick="handleOverlayClick(event)">
+  <div class="sheet" id="sheetNuevoProyecto">
+    <div class="sheet-handle"></div>
+
+    <div class="sheet-header">
+      <div class="sheet-title">Nuevo proyecto</div>
+      <button class="sheet-close" onclick="closeModal()" aria-label="Cerrar">✕</button>
+    </div>
+
+    <!-- Indicador de pasos -->
+    <div class="step-indicator">
+      <div class="step-dot active" id="sdot-1">1</div>
+      <div class="step-line" id="sline-1"></div>
+      <div class="step-dot pending" id="sdot-2">2</div>
+      <div class="step-line" id="sline-2"></div>
+      <div class="step-dot pending" id="sdot-3">3</div>
+      <div class="step-line" id="sline-3"></div>
+      <div class="step-dot pending" id="sdot-4">4</div>
+    </div>
+    <div class="step-label-row">
+      <span class="step-lbl active" id="slbl-1">Cliente</span>
+      <span class="step-lbl" id="slbl-2">Tatuaje</span>
+      <span class="step-lbl" id="slbl-3">Pago</span>
+      <span class="step-lbl" id="slbl-4">Diseño</span>
+    </div>
+
+    <!-- ── PASO 1: Datos del cliente ── -->
+    <div class="form-step active" id="step-1">
+      <div class="fld-group">
+        <label class="fld-label" for="f-nombre">Nombre completo *</label>
+        <input class="fld-input" id="f-nombre" type="text" placeholder="Ej: Valentina Rojas" autocomplete="off">
+      </div>
+      <div class="fld-group">
+        <label class="fld-label" for="f-ig">Instagram</label>
+        <input class="fld-input" id="f-ig" type="text" placeholder="@usuario">
+        <div class="fld-hint">Sin @ también funciona</div>
+      </div>
+      <div class="fld-group">
+        <label class="fld-label" for="f-tel">Teléfono</label>
+        <input class="fld-input" id="f-tel" type="tel" placeholder="+56 9 XXXX XXXX">
+      </div>
+      <div class="fld-group">
+        <label class="fld-label" for="f-email">Email</label>
+        <input class="fld-input" id="f-email" type="email" placeholder="correo@ejemplo.com">
+      </div>
+    </div>
+
+    <!-- ── PASO 2: Detalles del tatuaje ── -->
+    <div class="form-step" id="step-2">
+      <div class="fld-group">
+        <label class="fld-label">Estilo *</label>
+        <div class="chip-group" id="chip-estilo">
+          <div class="chip" onclick="selectChip(this,'estilo')">Blackwork</div>
+          <div class="chip" onclick="selectChip(this,'estilo')">Geométrico</div>
+          <div class="chip" onclick="selectChip(this,'estilo')">Linework</div>
+          <div class="chip" onclick="selectChip(this,'estilo')">Realismo</div>
+          <div class="chip" onclick="selectChip(this,'estilo')">Acuarela</div>
+          <div class="chip" onclick="selectChip(this,'estilo')">Tradicional</div>
+          <div class="chip" onclick="selectChip(this,'estilo')">Neotradicional</div>
+          <div class="chip" onclick="selectChip(this,'estilo')">Fineline</div>
+          <div class="chip" onclick="selectChip(this,'estilo')">Tribal</div>
+          <div class="chip" onclick="selectChip(this,'estilo')">Otro</div>
+        </div>
+      </div>
+      <div class="fld-group">
+        <label class="fld-label">Zona del cuerpo *</label>
+        <div class="chip-group" id="chip-zona">
+          <div class="chip" onclick="selectChip(this,'zona')">Brazo der.</div>
+          <div class="chip" onclick="selectChip(this,'zona')">Brazo izq.</div>
+          <div class="chip" onclick="selectChip(this,'zona')">Antebrazo</div>
+          <div class="chip" onclick="selectChip(this,'zona')">Espalda</div>
+          <div class="chip" onclick="selectChip(this,'zona')">Pecho</div>
+          <div class="chip" onclick="selectChip(this,'zona')">Costado</div>
+          <div class="chip" onclick="selectChip(this,'zona')">Pierna</div>
+          <div class="chip" onclick="selectChip(this,'zona')">Tobillo/pie</div>
+          <div class="chip" onclick="selectChip(this,'zona')">Cuello</div>
+          <div class="chip" onclick="selectChip(this,'zona')">Otro</div>
+        </div>
+      </div>
+      <div class="fld-group">
+        <label class="fld-label" for="f-desc">Descripción / referencias</label>
+        <textarea class="fld-textarea" id="f-desc" placeholder="Describe la idea, referencias, tamaño aprox..."></textarea>
+      </div>
+    </div>
+
+    <!-- ── PASO 3: Sesiones y precio ── -->
+    <div class="form-step" id="step-3">
+      <div class="fld-group">
+        <label class="fld-label" for="f-sesiones">Número de sesiones</label>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <button onclick="changeSesiones(-1)" style="width:36px;height:36px;border-radius:50%;border:0.5px solid var(--beige-dark);background:var(--card);font-size:18px;cursor:pointer;color:var(--ink-soft);font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;">−</button>
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--terra);min-width:32px;text-align:center;" id="ses-count">1</div>
+          <button onclick="changeSesiones(1)" style="width:36px;height:36px;border-radius:50%;border:0.5px solid var(--beige-dark);background:var(--card);font-size:18px;cursor:pointer;color:var(--ink-soft);font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;">+</button>
+        </div>
+      </div>
+      <div class="fld-row fld-group">
+        <div>
+          <label class="fld-label" for="f-total">Precio total *</label>
+          <input class="fld-input" id="f-total" type="number" placeholder="150000" inputmode="numeric">
+        </div>
+        <div>
+          <label class="fld-label" for="f-abono">Abono inicial</label>
+          <input class="fld-input" id="f-abono" type="number" placeholder="50000" inputmode="numeric">
+        </div>
+      </div>
+      <div class="fld-group">
+        <label class="fld-label">Estado de pago inicial</label>
+        <div class="chip-group" id="chip-pago">
+          <div class="chip selected" onclick="selectChip(this,'pago')">Sin abono</div>
+          <div class="chip" onclick="selectChip(this,'pago')">Abono parcial</div>
+          <div class="chip" onclick="selectChip(this,'pago')">Pagado</div>
+        </div>
+      </div>
+      <div class="fld-row fld-group">
+        <div>
+          <label class="fld-label" for="f-fecha">Primera sesión</label>
+          <input class="fld-input" id="f-fecha" type="date">
+        </div>
+        <div>
+          <label class="fld-label" for="f-hora">Hora</label>
+          <input class="fld-input" id="f-hora" type="time">
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PASO 4: Estado del diseño ── -->
+    <div class="form-step" id="step-4">
+      <div class="fld-group">
+        <label class="fld-label">¿En qué etapa está el diseño?</label>
+        <div class="design-stage-grid" id="dstage-group">
+          <div class="dstage selected" onclick="selectStage(this)">
+            <div class="dstage-dot"></div>
+            <div class="dstage-name">Pendiente</div>
+          </div>
+          <div class="dstage" onclick="selectStage(this)">
+            <div class="dstage-dot"></div>
+            <div class="dstage-name">Bosquejo</div>
+          </div>
+          <div class="dstage" onclick="selectStage(this)">
+            <div class="dstage-dot"></div>
+            <div class="dstage-name">En revisión</div>
+          </div>
+          <div class="dstage" onclick="selectStage(this)">
+            <div class="dstage-dot"></div>
+            <div class="dstage-name">Listo</div>
+          </div>
+          <div class="dstage" onclick="selectStage(this)">
+            <div class="dstage-dot"></div>
+            <div class="dstage-name">Stencil</div>
+          </div>
+        </div>
+      </div>
+      <div class="fld-group">
+        <label class="fld-label">Estado del proyecto</label>
+        <div class="chip-group" id="chip-estado">
+          <div class="chip selected" onclick="selectChip(this,'estado')">Agendado</div>
+          <div class="chip" onclick="selectChip(this,'estado')">Confirmado</div>
+          <div class="chip" onclick="selectChip(this,'estado')">En espera</div>
+        </div>
+      </div>
+      <div class="fld-group">
+        <label class="fld-label" for="f-notas">Notas internas</label>
+        <textarea class="fld-textarea" id="f-notas" placeholder="Notas privadas sobre el proyecto..."></textarea>
+      </div>
+    </div>
+
+    <!-- Pantalla de éxito -->
+    <div class="success-screen" id="success-screen">
+      <div class="success-icon">✓</div>
+      <div class="success-title" id="success-title">Proyecto creado</div>
+      <div class="success-sub" id="success-sub">El proyecto ha sido registrado correctamente.</div>
+    </div>
+
+    <!-- Footer con botones -->
+    <div class="sheet-footer" id="sheet-footer">
+      <button class="btn-back" id="btn-back" onclick="prevStep()" style="display:none;">← Atrás</button>
+      <button class="btn-next" id="btn-next" onclick="nextStep()">Continuar →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL: NUEVO INSUMO
+══════════════════════════════════════ -->
+<div class="modal-overlay" id="modalNuevoInsumo" onclick="handleOverlayClickInsumo(event)">
+  <div class="sheet" id="sheetNuevoInsumo">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <div class="sheet-title">Registrar insumo</div>
+      <button class="sheet-close" onclick="closeModalInsumo()" aria-label="Cerrar">✕</button>
+    </div>
+
+    <div style="padding:16px 20px 8px;">
+      <div class="fld-group">
+        <label class="fld-label" for="i-producto">Producto *</label>
+        <input class="fld-input" id="i-producto" type="text" placeholder="Ej: Tinta negra Intenze" autocomplete="off">
+      </div>
+      <div class="fld-group">
+        <label class="fld-label">Categoría</label>
+        <div class="chip-group" id="chip-categoria">
+          <div class="chip selected" onclick="selectChipInsumo(this)">Tinta</div>
+          <div class="chip" onclick="selectChipInsumo(this)">Agujas</div>
+          <div class="chip" onclick="selectChipInsumo(this)">Protección</div>
+          <div class="chip" onclick="selectChipInsumo(this)">Máquina</div>
+          <div class="chip" onclick="selectChipInsumo(this)">Cuidado</div>
+          <div class="chip" onclick="selectChipInsumo(this)">Otro</div>
+        </div>
+      </div>
+      <div class="fld-row fld-group">
+        <div>
+          <label class="fld-label" for="i-precio">Precio *</label>
+          <input class="fld-input" id="i-precio" type="number" placeholder="18500" inputmode="numeric">
+        </div>
+        <div>
+          <label class="fld-label" for="i-cantidad">Cantidad</label>
+          <input class="fld-input" id="i-cantidad" type="number" placeholder="1" inputmode="numeric">
+        </div>
+      </div>
+      <div class="fld-group">
+        <label class="fld-label" for="i-unidad">Unidad</label>
+        <input class="fld-input" id="i-unidad" type="text" placeholder="Ej: unidades, caja, rollo, ml...">
+      </div>
+      <div class="fld-group">
+        <label class="fld-label" for="i-proveedor">Proveedor / tienda</label>
+        <input class="fld-input" id="i-proveedor" type="text" placeholder="Ej: TattooSupply, MercadoLibre...">
+      </div>
+      <div class="fld-group">
+        <label class="fld-label" for="i-fecha">Fecha de compra</label>
+        <input class="fld-input" id="i-fecha" type="date">
+      </div>
+    </div>
+
+    <div class="success-screen" id="success-insumo">
+      <div class="success-icon">✓</div>
+      <div class="success-title">Insumo registrado</div>
+      <div class="success-sub">El insumo fue guardado correctamente.</div>
+    </div>
+
+    <div class="sheet-footer" id="footer-insumo">
+      <button class="btn-next success" onclick="guardarInsumo()">Guardar insumo ✓</button>
+    </div>
+  </div>
+</div>
+
 <script>
+// ══════════════════════════════════════
+// STORAGE
+// ══════════════════════════════════════
+const STORAGE_PROYECTOS = 'ansep_proyectos';
+const STORAGE_INSUMOS   = 'ansep_insumos';
+
+function getProyectos() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_PROYECTOS)) || []; }
+  catch { return []; }
+}
+function saveProyectos(arr) { localStorage.setItem(STORAGE_PROYECTOS, JSON.stringify(arr)); }
+function getInsumos() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_INSUMOS)) || []; }
+  catch { return []; }
+}
+function saveInsumos(arr) { localStorage.setItem(STORAGE_INSUMOS, JSON.stringify(arr)); }
+
+// ══════════════════════════════════════
+// TABS
+// ══════════════════════════════════════
 function switchTab(name) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
   event.currentTarget.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
 }
+
+// ══════════════════════════════════════
+// RENDER PROYECTOS
+// ══════════════════════════════════════
+const DISEÑO_ETAPAS = ['Pendiente','Bosquejo','En revisión','Listo','Stencil'];
+const DISEÑO_LABELS = ['Pend.','Bosq.','Revis.','Listo','Stenc.'];
+const ESTADO_CLASS  = { 'Agendado':'s-agendado','Confirmado':'s-confirmado','En espera':'s-retoque','Tatuado':'s-tatuado' };
+
+function fmtMoney(n) {
+  return '$' + Number(n).toLocaleString('es-CL');
+}
+function fmtFecha(iso) {
+  if (!iso) return 'Sin fecha';
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('es-CL', { day:'numeric', month:'short' });
+}
+
+function renderProyectos() {
+  const proyectos = getProyectos();
+  const container = document.getElementById('proyectos-list');
+  if (!container) return;
+
+  if (proyectos.length === 0) {
+    container.innerHTML = `
+      <div style="text-align:center; padding:40px 20px; color:var(--ink-hint);">
+        <div style="font-size:32px; margin-bottom:10px;">🖋️</div>
+        <div style="font-size:14px; font-weight:500; color:var(--ink-soft); margin-bottom:6px;">Sin proyectos aún</div>
+        <div style="font-size:12px;">Agrega tu primer proyecto con el botón + Nuevo</div>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = proyectos.map((p, idx) => {
+    const etapaIdx = DISEÑO_ETAPAS.indexOf(p.disenoEtapa);
+    const pagoTotal = Number(p.total) || 0;
+    const pagoAbono = Number(p.abono) || 0;
+    const pagoPct   = pagoTotal > 0 ? Math.round((pagoAbono / pagoTotal) * 100) : 0;
+    const pagadoTotal = p.estadoPago === 'Pagado';
+    const statusCls = ESTADO_CLASS[p.estado] || 's-agendado';
+
+    const disenoSteps = DISEÑO_LABELS.map((lbl, i) => {
+      const cls = i < etapaIdx ? 'done' : i === etapaIdx ? 'active' : '';
+      const lblCls = i === etapaIdx ? 'active' : '';
+      return `<div class="design-step ${cls}"></div>`;
+    }).join('');
+    const disenoLabels = DISEÑO_LABELS.map((lbl, i) => {
+      const lblCls = i === etapaIdx ? 'active' : '';
+      return `<div class="design-lbl ${lblCls}">${lbl}</div>`;
+    }).join('');
+
+    const pagoHTML = pagadoTotal
+      ? `<div class="pago-nums"><span style="color:var(--olive);font-weight:500;">Pagado ✓</span><span>Total: ${fmtMoney(pagoTotal)}</span></div>`
+      : `<div class="pago-track"><div class="pago-fill" style="width:${pagoPct}%;"></div></div>
+         <div class="pago-nums"><span>Abono: ${fmtMoney(pagoAbono)}</span><span>Total: ${fmtMoney(pagoTotal)}</span></div>`;
+
+    const fechaStr = p.fecha ? `${fmtFecha(p.fecha)}${p.hora ? ' · ' + p.hora : ''}` : 'Sin fecha';
+    const igStr = [p.ig ? (p.ig.startsWith('@') ? p.ig : '@'+p.ig) : '', p.tel].filter(Boolean).join(' · ');
+
+    return `
+      <div class="project-card">
+        <div class="pc-top">
+          <div>
+            <div class="pc-name">${p.nombre}</div>
+            ${igStr ? `<div class="pc-ig">${igStr}</div>` : ''}
+          </div>
+          <span class="status-pill ${statusCls}">${p.estado}</span>
+        </div>
+        <div class="pc-row">
+          <span><i class="ti ti-calendar" style="font-size:12px;vertical-align:-1px;"></i> ${fechaStr}</span>
+          <span>${p.estilo}${p.zona ? ' · ' + p.zona : ''}</span>
+        </div>
+        <div class="pc-row">
+          <span>Sesiones: 0 / ${p.sesiones}</span>
+        </div>
+        <div class="pc-divider"></div>
+        <div style="font-size:10px;color:var(--ink-hint);letter-spacing:0.5px;margin-bottom:5px;">ESTADO DEL DISEÑO</div>
+        <div class="pc-design-row">${disenoSteps}</div>
+        <div class="pc-design-labels">${disenoLabels}</div>
+        <div class="pc-divider"></div>
+        <div style="font-size:10px;color:var(--ink-hint);letter-spacing:0.5px;margin-bottom:5px;">PAGO</div>
+        <div class="pago-bar">${pagoHTML}</div>
+        ${p.notas ? `<div style="margin-top:10px;font-size:11px;color:var(--ink-hint);font-style:italic;">${p.notas}</div>` : ''}
+        <div style="margin-top:10px;display:flex;gap:8px;">
+          <button onclick="eliminarProyecto(${idx})" style="background:none;border:0.5px solid var(--beige-dark);border-radius:8px;padding:5px 10px;font-size:11px;color:var(--ink-hint);cursor:pointer;font-family:'DM Sans',sans-serif;">Eliminar</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function eliminarProyecto(idx) {
+  const proyectos = getProyectos();
+  proyectos.splice(idx, 1);
+  saveProyectos(proyectos);
+  renderProyectos();
+}
+
+// ══════════════════════════════════════
+// RENDER INSUMOS
+// ══════════════════════════════════════
+function renderInsumos() {
+  const insumos = getInsumos();
+  const container = document.getElementById('insumos-list');
+  const totalEl   = document.getElementById('insumos-total');
+  const totalVal  = document.getElementById('insumos-total-val');
+  if (!container) return;
+
+  if (insumos.length === 0) {
+    container.innerHTML = `
+      <div style="text-align:center; padding:40px 20px; color:var(--ink-hint);">
+        <div style="font-size:32px; margin-bottom:10px;">🗂️</div>
+        <div style="font-size:14px; font-weight:500; color:var(--ink-soft); margin-bottom:6px;">Sin insumos registrados</div>
+        <div style="font-size:12px;">Registra tus compras con el botón + Agregar</div>
+      </div>`;
+    totalEl.style.display = 'none';
+    return;
+  }
+
+  // Calcular total del mes actual
+  const ahora = new Date();
+  const mesActual = ahora.getMonth();
+  const añoActual = ahora.getFullYear();
+  let totalMes = 0;
+  insumos.forEach(i => {
+    if (i.fecha) {
+      const d = new Date(i.fecha + 'T00:00:00');
+      if (d.getMonth() === mesActual && d.getFullYear() === añoActual) {
+        totalMes += Number(i.precio) || 0;
+      }
+    }
+  });
+
+  container.innerHTML = `
+    <div style="background:var(--card);border-radius:14px;border:0.5px solid var(--beige-dark);overflow:hidden;">
+      ${insumos.map((item, idx) => `
+        <div style="padding:10px 16px;${idx < insumos.length-1 ? 'border-bottom:0.5px solid var(--beige-dark);' : ''}display:flex;justify-content:space-between;align-items:center;gap:8px;">
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.producto}</div>
+            <div style="font-size:11px;color:var(--ink-hint);margin-top:1px;">
+              ${item.categoria ? item.categoria + ' · ' : ''}${item.proveedor ? item.proveedor + ' · ' : ''}${item.fecha ? fmtFecha(item.fecha) : ''}
+            </div>
+          </div>
+          <div style="text-align:right;flex-shrink:0;">
+            <div style="font-size:13px;font-weight:500;color:var(--ink);">${fmtMoney(item.precio)}</div>
+            <div style="font-size:10px;color:var(--olive);">${item.cantidad || 1} ${item.unidad || 'u.'}</div>
+          </div>
+          <button onclick="eliminarInsumo(${idx})" style="background:none;border:none;color:var(--ink-hint);cursor:pointer;font-size:16px;padding:0 0 0 4px;line-height:1;">×</button>
+        </div>`).join('')}
+    </div>`;
+
+  totalEl.style.display = 'flex';
+  totalVal.textContent = fmtMoney(totalMes) + ' este mes';
+}
+
+function eliminarInsumo(idx) {
+  const insumos = getInsumos();
+  insumos.splice(idx, 1);
+  saveInsumos(insumos);
+  renderInsumos();
+}
+
+// ══════════════════════════════════════
+// MODAL PROYECTO
+// ══════════════════════════════════════
+let currentStep = 1;
+const TOTAL_STEPS = 4;
+let sesiones = 1;
+
+function openModal() {
+  currentStep = 1;
+  sesiones = 1;
+  document.getElementById('ses-count').textContent = 1;
+  resetForm();
+  updateStepUI();
+  document.getElementById('modalNuevoProyecto').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalNuevoProyecto').classList.remove('open');
+  document.body.style.overflow = '';
+  document.getElementById('success-screen').classList.remove('active');
+  document.getElementById('sheet-footer').style.display = 'flex';
+  document.querySelectorAll('#sheetNuevoProyecto .form-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-1').classList.add('active');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modalNuevoProyecto')) closeModal();
+}
+
+function updateStepUI() {
+  document.querySelectorAll('#sheetNuevoProyecto .form-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('step-' + currentStep).classList.add('active');
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const dot = document.getElementById('sdot-' + i);
+    const lbl = document.getElementById('slbl-' + i);
+    dot.className = 'step-dot ' + (i < currentStep ? 'done' : i === currentStep ? 'active' : 'pending');
+    dot.textContent = i < currentStep ? '✓' : i;
+    if (lbl) lbl.className = 'step-lbl' + (i === currentStep ? ' active' : '');
+  }
+  for (let i = 1; i < TOTAL_STEPS; i++) {
+    const line = document.getElementById('sline-' + i);
+    if (line) line.className = 'step-line' + (i < currentStep ? ' done' : '');
+  }
+  const btnBack = document.getElementById('btn-back');
+  const btnNext = document.getElementById('btn-next');
+  btnBack.style.display = currentStep > 1 ? 'block' : 'none';
+  btnNext.textContent = currentStep === TOTAL_STEPS ? 'Guardar proyecto ✓' : 'Continuar →';
+  btnNext.className = 'btn-next' + (currentStep === TOTAL_STEPS ? ' success' : '');
+}
+
+function validateStep() {
+  if (currentStep === 1) {
+    const nombre = document.getElementById('f-nombre').value.trim();
+    if (!nombre) { highlight('f-nombre'); return false; }
+  }
+  if (currentStep === 2) {
+    const estilo = document.querySelector('#chip-estilo .chip.selected');
+    const zona   = document.querySelector('#chip-zona .chip.selected');
+    if (!estilo) { highlightGroup('#chip-estilo'); return false; }
+    if (!zona)   { highlightGroup('#chip-zona');   return false; }
+  }
+  if (currentStep === 3) {
+    const total = document.getElementById('f-total').value.trim();
+    if (!total) { highlight('f-total'); return false; }
+  }
+  return true;
+}
+
+function highlight(id) {
+  const el = document.getElementById(id);
+  el.focus(); el.style.borderColor = 'var(--terra)';
+  setTimeout(() => el.style.borderColor = '', 1500);
+}
+function highlightGroup(sel) {
+  const el = document.querySelector(sel);
+  el.style.outline = '1.5px solid var(--terra)'; el.style.borderRadius = '8px';
+  setTimeout(() => { el.style.outline = ''; }, 1400);
+}
+
+function nextStep() {
+  if (!validateStep()) return;
+  if (currentStep < TOTAL_STEPS) {
+    currentStep++;
+    updateStepUI();
+    document.getElementById('sheetNuevoProyecto').scrollTop = 0;
+  } else {
+    guardarProyecto();
+  }
+}
+
+function prevStep() {
+  if (currentStep > 1) {
+    currentStep--;
+    updateStepUI();
+    document.getElementById('sheetNuevoProyecto').scrollTop = 0;
+  }
+}
+
+function guardarProyecto() {
+  const proyecto = {
+    id: Date.now(),
+    nombre:      document.getElementById('f-nombre').value.trim(),
+    ig:          document.getElementById('f-ig').value.trim(),
+    tel:         document.getElementById('f-tel').value.trim(),
+    email:       document.getElementById('f-email').value.trim(),
+    estilo:      document.querySelector('#chip-estilo .chip.selected')?.textContent || '',
+    zona:        document.querySelector('#chip-zona .chip.selected')?.textContent || '',
+    desc:        document.getElementById('f-desc').value.trim(),
+    sesiones:    sesiones,
+    sesionesRealizadas: 0,
+    total:       document.getElementById('f-total').value.trim(),
+    abono:       document.getElementById('f-abono').value.trim(),
+    estadoPago:  document.querySelector('#chip-pago .chip.selected')?.textContent || 'Sin abono',
+    fecha:       document.getElementById('f-fecha').value,
+    hora:        document.getElementById('f-hora').value,
+    disenoEtapa: document.querySelector('#dstage-group .dstage.selected .dstage-name')?.textContent || 'Pendiente',
+    estado:      document.querySelector('#chip-estado .chip.selected')?.textContent || 'Agendado',
+    notas:       document.getElementById('f-notas').value.trim(),
+    creadoEn:    new Date().toISOString()
+  };
+
+  const proyectos = getProyectos();
+  proyectos.unshift(proyecto); // Más reciente primero
+  saveProyectos(proyectos);
+  renderProyectos();
+
+  // Mostrar éxito
+  document.querySelectorAll('#sheetNuevoProyecto .form-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('sheet-footer').style.display = 'none';
+  document.getElementById('success-screen').classList.add('active');
+  document.getElementById('success-title').textContent = proyecto.nombre + ' registrado';
+  document.getElementById('success-sub').textContent = 'El proyecto ya aparece en tu lista.';
+
+  setTimeout(() => closeModal(), 2000);
+}
+
+function changeSesiones(delta) {
+  sesiones = Math.max(1, Math.min(10, sesiones + delta));
+  document.getElementById('ses-count').textContent = sesiones;
+}
+
+function selectChip(el, group) {
+  document.querySelectorAll('#chip-' + group + ' .chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function selectStage(el) {
+  document.querySelectorAll('#dstage-group .dstage').forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function resetForm() {
+  ['f-nombre','f-ig','f-tel','f-email','f-desc','f-total','f-abono','f-fecha','f-hora','f-notas']
+    .forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
+  document.querySelectorAll('#sheetNuevoProyecto .chip').forEach(c => c.classList.remove('selected'));
+  document.querySelector('#chip-pago .chip').classList.add('selected');
+  document.querySelector('#chip-estado .chip').classList.add('selected');
+  document.querySelector('#dstage-group .dstage').classList.add('selected');
+}
+
+// ══════════════════════════════════════
+// MODAL INSUMO
+// ══════════════════════════════════════
+function openModalInsumo() {
+  document.getElementById('i-producto').value = '';
+  document.getElementById('i-precio').value   = '';
+  document.getElementById('i-cantidad').value = '';
+  document.getElementById('i-unidad').value   = '';
+  document.getElementById('i-proveedor').value = '';
+  document.getElementById('i-fecha').value    = '';
+  document.querySelectorAll('#chip-categoria .chip').forEach(c => c.classList.remove('selected'));
+  document.querySelector('#chip-categoria .chip').classList.add('selected');
+  document.getElementById('success-insumo').classList.remove('active');
+  document.getElementById('footer-insumo').style.display = 'flex';
+  document.getElementById('modalNuevoInsumo').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModalInsumo() {
+  document.getElementById('modalNuevoInsumo').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClickInsumo(e) {
+  if (e.target === document.getElementById('modalNuevoInsumo')) closeModalInsumo();
+}
+
+function selectChipInsumo(el) {
+  document.querySelectorAll('#chip-categoria .chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function guardarInsumo() {
+  const producto = document.getElementById('i-producto').value.trim();
+  const precio   = document.getElementById('i-precio').value.trim();
+  if (!producto) { highlight('i-producto'); return; }
+  if (!precio)   { highlight('i-precio');   return; }
+
+  const insumo = {
+    id:         Date.now(),
+    producto,
+    categoria:  document.querySelector('#chip-categoria .chip.selected')?.textContent || '',
+    precio,
+    cantidad:   document.getElementById('i-cantidad').value.trim() || '1',
+    unidad:     document.getElementById('i-unidad').value.trim() || 'u.',
+    proveedor:  document.getElementById('i-proveedor').value.trim(),
+    fecha:      document.getElementById('i-fecha').value,
+    creadoEn:   new Date().toISOString()
+  };
+
+  const insumos = getInsumos();
+  insumos.unshift(insumo);
+  saveInsumos(insumos);
+  renderInsumos();
+
+  document.getElementById('footer-insumo').style.display = 'none';
+  document.getElementById('success-insumo').classList.add('active');
+  setTimeout(() => closeModalInsumo(), 1800);
+}
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  renderProyectos();
+  renderInsumos();
+});
 </script>
