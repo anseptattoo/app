@@ -1,4 +1,3 @@
-
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap');
 
@@ -727,11 +726,169 @@
     font-weight: 700;
     color: var(--ink);
   }
-  .agenda-detail {
-    font-size: 11px;
-    color: var(--ink-soft);
-    margin-top: 2px;
+  /* ── DETAIL PANEL ── */
+  .detail-panel {
+    position: fixed;
+    inset: 0;
+    background: var(--beige);
+    z-index: 200;
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.32,0.72,0,1);
+    overflow-y: auto;
+    max-width: 390px;
+    margin: 0 auto;
   }
+  .detail-panel.open { transform: translateX(0); }
+
+  .detail-topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 16px 14px;
+    background: var(--beige);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 0.5px solid var(--beige-dark);
+  }
+  .detail-back {
+    background: var(--card);
+    border: 0.5px solid var(--beige-dark);
+    border-radius: 10px;
+    width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 16px; color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+  .detail-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    flex: 1;
+  }
+
+  .detail-section {
+    padding: 14px 16px 0;
+  }
+  .detail-section-title {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-hint);
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .detail-card {
+    background: var(--card);
+    border-radius: 14px;
+    border: 0.5px solid var(--beige-dark);
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 0.5px solid var(--beige-dark);
+    gap: 8px;
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-row-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+  .detail-row-val {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: right;
+  }
+
+  /* Editable inline select */
+  .detail-select {
+    background: none;
+    border: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--terra);
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    text-align: right;
+    -webkit-appearance: none;
+    padding-right: 14px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23B5593A'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+  }
+
+  /* Foto grid */
+  .foto-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .foto-thumb {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    object-fit: cover;
+    width: 100%;
+    cursor: pointer;
+  }
+  .foto-add {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    border: 1.5px dashed var(--beige-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: var(--card);
+    color: var(--ink-hint);
+    font-size: 11px;
+    gap: 4px;
+  }
+  .foto-add-icon { font-size: 22px; line-height: 1; }
+
+  /* Buscador */
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 0.5px solid var(--beige-dark);
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+  }
+  .search-bar input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+  }
+  .search-bar input::placeholder { color: var(--ink-hint); }
+  .search-icon { color: var(--ink-hint); font-size: 16px; }
+
+  /* Foto lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 90%; max-height: 85vh; border-radius: 10px; object-fit: contain; }
+  .lightbox-close { position: absolute; top: 20px; right: 20px; color: white; font-size: 28px; cursor: pointer; }</style>
 </style>
 
 <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Ansep.Tattoo — agenda y proyectos de tatuajes</h2>
@@ -744,18 +901,7 @@
   </div>
 
   <!-- PRÓXIMO TATUAJE -->
-  <div class="next-card">
-    <div class="next-label">Próxima sesión</div>
-    <div class="next-name">Valentina Rojas</div>
-    <div class="next-meta">
-      <div class="next-meta-item"><i class="ti ti-calendar" aria-hidden="true"></i> Sáb 31 mayo</div>
-      <div class="next-meta-item"><i class="ti ti-clock" aria-hidden="true"></i> 15:00 hrs</div>
-    </div>
-    <div class="design-badge">
-      <div class="design-dot"></div>
-      Diseño en revisión
-    </div>
-  </div>
+  <div id="next-card-wrap"></div>
 
   <!-- TABS -->
   <div class="tabs-wrap">
@@ -775,69 +921,31 @@
       <div class="section-title">Resumen</div>
       <button class="add-btn" onclick="openModal()"><i class="ti ti-plus" aria-hidden="true"></i> Nuevo proyecto</button>
     </div>
-
-    <!-- Stats rápidas -->
+    <!-- Stats dinámicas -->
     <div style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; margin-bottom:14px;">
       <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
         <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">En curso</div>
-        <div style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--terra);">4</div>
+        <div id="stat-activos" style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--terra);">0</div>
         <div style="font-size:10px; color:var(--ink-hint);">proyectos activos</div>
       </div>
       <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
         <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Este mes</div>
-        <div style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--olive);">3</div>
+        <div id="stat-mes" style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--olive);">0</div>
         <div style="font-size:10px; color:var(--ink-hint);">tatuajes realizados</div>
       </div>
       <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
         <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Por cobrar</div>
-        <div style="font-size:22px; font-family:'Playfair Display',serif; font-weight:700; color:var(--ink);">$85k</div>
+        <div id="stat-cobrar" style="font-size:22px; font-family:'Playfair Display',serif; font-weight:700; color:var(--ink);">$0</div>
         <div style="font-size:10px; color:var(--terra);">saldo pendiente</div>
       </div>
       <div style="background:var(--card); border:0.5px solid var(--beige-dark); border-radius:12px; padding:12px;">
         <div style="font-size:10px; color:var(--ink-hint); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">Retoques</div>
-        <div style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--ink-soft);">1</div>
+        <div id="stat-retoques" style="font-size:26px; font-family:'Playfair Display',serif; font-weight:700; color:var(--ink-soft);">0</div>
         <div style="font-size:10px; color:var(--ink-hint);">por agendar</div>
       </div>
     </div>
-
-    <!-- Próximos -->
     <div class="section-title" style="margin-bottom:10px;">Esta semana</div>
-    <div class="agenda-item">
-      <div class="agenda-time-col">
-        <div class="agenda-time">15:00</div>
-        <div class="agenda-ampm">Sáb</div>
-      </div>
-      <div class="agenda-vline"></div>
-      <div class="agenda-info">
-        <div class="agenda-name">Valentina Rojas</div>
-        <div class="agenda-detail">Manga — brazo derecho · Sesión 1/3</div>
-      </div>
-      <span class="status-pill s-confirmado">Confirmado</span>
-    </div>
-    <div class="agenda-item">
-      <div class="agenda-time-col">
-        <div class="agenda-time">11:00</div>
-        <div class="agenda-ampm">Dom</div>
-      </div>
-      <div class="agenda-vline"></div>
-      <div class="agenda-info">
-        <div class="agenda-name">Matías Fuentes</div>
-        <div class="agenda-detail">Geométrico — espalda · Sesión 2/2</div>
-      </div>
-      <span class="status-pill s-agendado">Agendado</span>
-    </div>
-    <div class="agenda-item">
-      <div class="agenda-time-col">
-        <div class="agenda-time">14:00</div>
-        <div class="agenda-ampm">Lun</div>
-      </div>
-      <div class="agenda-vline"></div>
-      <div class="agenda-info">
-        <div class="agenda-name">Camila Torres</div>
-        <div class="agenda-detail">Linework — costado · Sesión 1/1</div>
-      </div>
-      <span class="status-pill s-agendado">Agendado</span>
-    </div>
+    <div id="esta-semana-list"></div>
   </div>
 
   <!-- TAB: PROYECTOS -->
@@ -845,6 +953,12 @@
     <div class="section-header">
       <div class="section-title">Proyectos</div>
       <button class="add-btn" onclick="openModal()"><i class="ti ti-plus" aria-hidden="true"></i> Nuevo</button>
+    </div>
+
+    <!-- Buscador -->
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Buscar cliente..." id="buscador-proyectos" oninput="renderProyectos()" autocomplete="off">
     </div>
 
     <!-- Filtros rápidos -->
@@ -1030,6 +1144,144 @@
 </div>
 
 <!-- ══════════════════════════════════════
+     PANEL: DETALLE DE PROYECTO
+══════════════════════════════════════ -->
+<div class="detail-panel" id="detailPanel">
+  <div class="detail-topbar">
+    <button class="detail-back" onclick="closeDetail()" aria-label="Volver">←</button>
+    <div class="detail-title" id="detail-nombre">Proyecto</div>
+    <span id="detail-estado-pill" class="status-pill s-agendado" onclick="cycleEstado()" style="cursor:pointer;" title="Toca para cambiar estado">—</span>
+  </div>
+
+  <!-- Info cliente -->
+  <div class="detail-section">
+    <div class="detail-section-title">Cliente</div>
+    <div class="detail-card">
+      <div class="detail-row">
+        <span class="detail-row-label">Instagram</span>
+        <span class="detail-row-val" id="d-ig">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-row-label">Teléfono</span>
+        <span class="detail-row-val" id="d-tel">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-row-label">Email</span>
+        <span class="detail-row-val" id="d-email">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info tatuaje -->
+  <div class="detail-section">
+    <div class="detail-section-title">Tatuaje</div>
+    <div class="detail-card">
+      <div class="detail-row">
+        <span class="detail-row-label">Estilo</span>
+        <span class="detail-row-val" id="d-estilo">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-row-label">Zona</span>
+        <span class="detail-row-val" id="d-zona">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-row-label">Tamaño</span>
+        <span class="detail-row-val" id="d-tamaño">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-row-label">Sesiones</span>
+        <span class="detail-row-val" id="d-sesiones">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-row-label">Primera sesión</span>
+        <span class="detail-row-val" id="d-fecha">—</span>
+      </div>
+    </div>
+    <div id="d-desc-wrap" style="background:var(--card);border-radius:12px;border:0.5px solid var(--beige-dark);padding:12px 14px;margin-bottom:12px;font-size:13px;color:var(--ink-soft);line-height:1.6;display:none;"></div>
+  </div>
+
+  <!-- Estado diseño -->
+  <div class="detail-section">
+    <div class="detail-section-title">Estado del diseño</div>
+    <div class="detail-card" style="padding:12px 14px;">
+      <div id="d-diseno-steps" class="pc-design-row" style="margin-bottom:6px;"></div>
+      <div id="d-diseno-labels" class="pc-design-labels" style="margin-bottom:10px;"></div>
+      <div style="display:flex; gap:6px; flex-wrap:wrap;" id="d-diseno-btns"></div>
+    </div>
+  </div>
+
+  <!-- Pago -->
+  <div class="detail-section">
+    <div class="detail-section-title">Pago</div>
+    <div class="detail-card">
+      <div class="detail-row">
+        <span class="detail-row-label">Total</span>
+        <span class="detail-row-val" id="d-total">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-row-label">Abono</span>
+        <span class="detail-row-val" id="d-abono">—</span>
+      </div>
+      <div class="detail-row">
+        <span class="detail-row-label">Estado pago</span>
+        <select class="detail-select" id="d-pago-sel" onchange="updatePago(this.value)">
+          <option>Sin abono</option>
+          <option>Abono parcial</option>
+          <option>Pagado</option>
+        </select>
+      </div>
+      <div style="margin-top:10px;">
+        <div class="pago-track"><div class="pago-fill" id="d-pago-fill" style="width:0%;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fotos de referencia -->
+  <div class="detail-section">
+    <div class="detail-section-title">Fotos de referencia</div>
+    <div class="detail-card" style="padding:12px;">
+      <div class="foto-grid" id="d-fotos-ref">
+        <label class="foto-add" style="cursor:pointer;">
+          <div class="foto-add-icon">+</div>
+          <div>Agregar</div>
+          <input type="file" accept="image/*" multiple style="display:none;" onchange="addFotosRef(event)">
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diseño final -->
+  <div class="detail-section">
+    <div class="detail-section-title">Diseño / stencil</div>
+    <div class="detail-card" style="padding:12px;" id="d-diseno-card">
+      <label class="foto-add" style="width:100%;aspect-ratio:auto;padding:20px;flex-direction:row;gap:10px;cursor:pointer;" id="d-diseno-upload-label">
+        <div class="foto-add-icon">🖊</div>
+        <div style="text-align:left;"><div style="font-size:13px;color:var(--ink-soft);">Subir diseño</div><div style="font-size:11px;color:var(--ink-hint);margin-top:2px;">Bosquejo, lineal o stencil final</div></div>
+        <input type="file" accept="image/*" style="display:none;" onchange="addFotoDiseno(event)">
+      </label>
+      <img id="d-diseno-img" src="" style="display:none;width:100%;border-radius:10px;object-fit:contain;max-height:280px;cursor:pointer;" onclick="openLightbox(this.src)">
+    </div>
+  </div>
+
+  <!-- Notas -->
+  <div class="detail-section" id="d-notas-section" style="display:none;">
+    <div class="detail-section-title">Notas internas</div>
+    <div style="background:var(--card);border-radius:12px;border:0.5px solid var(--beige-dark);padding:12px 14px;font-size:13px;color:var(--ink-soft);line-height:1.6;" id="d-notas-val"></div>
+  </div>
+
+  <div style="padding:20px 16px;">
+    <button onclick="confirmarEliminar()" style="width:100%;padding:12px;background:none;border:0.5px solid var(--beige-dark);border-radius:12px;font-size:13px;color:var(--ink-hint);cursor:pointer;font-family:'DM Sans',sans-serif;">Eliminar proyecto</button>
+  </div>
+  <div style="height:20px;"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">✕</span>
+  <img id="lightbox-img" src="" alt="foto">
+</div>
+
+<!-- ══════════════════════════════════════
      MODAL: NUEVO PROYECTO
 ══════════════════════════════════════ -->
 <div class="modal-overlay" id="modalNuevoProyecto" onclick="handleOverlayClick(event)">
@@ -1109,6 +1361,15 @@
           <div class="chip" onclick="selectChip(this,'zona')">Tobillo/pie</div>
           <div class="chip" onclick="selectChip(this,'zona')">Cuello</div>
           <div class="chip" onclick="selectChip(this,'zona')">Otro</div>
+        </div>
+      </div>
+      <div class="fld-group">
+        <label class="fld-label">Tamaño aproximado</label>
+        <div class="chip-group" id="chip-tamaño">
+          <div class="chip" onclick="selectChip(this,'tamaño')">Pequeño &lt;5cm</div>
+          <div class="chip" onclick="selectChip(this,'tamaño')">Mediano 5–15cm</div>
+          <div class="chip" onclick="selectChip(this,'tamaño')">Grande 15–30cm</div>
+          <div class="chip" onclick="selectChip(this,'tamaño')">Extra grande +30cm</div>
         </div>
       </div>
       <div class="fld-group">
@@ -1295,6 +1556,44 @@ function getInsumos() {
 function saveInsumos(arr) { localStorage.setItem(STORAGE_INSUMOS, JSON.stringify(arr)); }
 
 // ══════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════
+const DISEÑO_ETAPAS = ['Pendiente','Bosquejo','En revisión','Listo','Stencil'];
+const DISEÑO_LABELS = ['Pend.','Bosq.','Revis.','Listo','Stenc.'];
+const ESTADO_CLASS  = { 'Agendado':'s-agendado','Confirmado':'s-confirmado','En espera':'s-retoque','Tatuado':'s-tatuado' };
+const DIAS = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+const MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+
+function fmtMoney(n) {
+  if (!n || isNaN(n)) return '$0';
+  return '$' + Number(n).toLocaleString('es-CL');
+}
+function fmtFecha(iso) {
+  if (!iso) return 'Sin fecha';
+  const d = new Date(iso + 'T12:00:00');
+  return d.getDate() + ' ' + MESES[d.getMonth()];
+}
+function fmtFechaDia(iso) {
+  if (!iso) return '';
+  const d = new Date(iso + 'T12:00:00');
+  return DIAS[d.getDay()] + ' ' + d.getDate() + ' ' + MESES[d.getMonth()];
+}
+function getStartOfWeek(date) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  d.setDate(diff); d.setHours(0,0,0,0);
+  return d;
+}
+function getEndOfWeek(date) {
+  const start = getStartOfWeek(date);
+  const end = new Date(start);
+  end.setDate(start.getDate() + 6);
+  end.setHours(23,59,59,999);
+  return end;
+}
+
+// ══════════════════════════════════════
 // TABS
 // ══════════════════════════════════════
 function switchTab(name) {
@@ -1305,23 +1604,111 @@ function switchTab(name) {
 }
 
 // ══════════════════════════════════════
+// RENDER INICIO
+// ══════════════════════════════════════
+function renderInicio() {
+  const proyectos = getProyectos();
+  const ahora = new Date();
+  const mesActual = ahora.getMonth();
+  const añoActual = ahora.getFullYear();
+  const semanaStart = getStartOfWeek(ahora);
+  const semanaEnd   = getEndOfWeek(ahora);
+
+  // Stats
+  const activos   = proyectos.filter(p => p.estado !== 'Tatuado').length;
+  const tatuados  = proyectos.filter(p => {
+    if (p.estado !== 'Tatuado' || !p.fecha) return false;
+    const d = new Date(p.fecha + 'T12:00:00');
+    return d.getMonth() === mesActual && d.getFullYear() === añoActual;
+  }).length;
+  const porCobrar = proyectos.reduce((sum, p) => {
+    const total = Number(p.total) || 0;
+    const abono = Number(p.abono) || 0;
+    return p.estadoPago !== 'Pagado' ? sum + (total - abono) : sum;
+  }, 0);
+  const retoques = proyectos.filter(p => p.estado === 'En espera').length;
+
+  document.getElementById('stat-activos').textContent = activos;
+  document.getElementById('stat-mes').textContent = tatuados;
+  document.getElementById('stat-cobrar').textContent = porCobrar >= 1000
+    ? '$' + Math.round(porCobrar/1000) + 'k'
+    : fmtMoney(porCobrar);
+  document.getElementById('stat-retoques').textContent = retoques;
+
+  // Próxima sesión card
+  const proximos = proyectos
+    .filter(p => p.fecha)
+    .map(p => ({ ...p, _fecha: new Date(p.fecha + 'T' + (p.hora || '00:00') + ':00') }))
+    .filter(p => p._fecha >= ahora)
+    .sort((a,b) => a._fecha - b._fecha);
+
+  const nextWrap = document.getElementById('next-card-wrap');
+  if (proximos.length > 0) {
+    const prox = proximos[0];
+    nextWrap.innerHTML = `
+      <div class="next-card" onclick="openDetail(${getProyectos().findIndex(p=>p.id===prox.id)})" style="cursor:pointer;">
+        <div class="next-label">Próxima sesión</div>
+        <div class="next-name">${prox.nombre}</div>
+        <div class="next-meta">
+          <div class="next-meta-item"><i class="ti ti-calendar"></i> ${fmtFechaDia(prox.fecha)}</div>
+          ${prox.hora ? `<div class="next-meta-item"><i class="ti ti-clock"></i> ${prox.hora} hrs</div>` : ''}
+        </div>
+        <div class="design-badge">
+          <div class="design-dot"></div>
+          Diseño: ${prox.disenoEtapa || 'Pendiente'}
+        </div>
+      </div>`;
+  } else {
+    nextWrap.innerHTML = '';
+  }
+
+  // Esta semana
+  const estaSemana = proyectos
+    .filter(p => {
+      if (!p.fecha) return false;
+      const d = new Date(p.fecha + 'T12:00:00');
+      return d >= semanaStart && d <= semanaEnd;
+    })
+    .sort((a,b) => new Date(a.fecha) - new Date(b.fecha));
+
+  const lista = document.getElementById('esta-semana-list');
+  if (estaSemana.length === 0) {
+    lista.innerHTML = `<div style="text-align:center;padding:24px 0;color:var(--ink-hint);font-size:13px;">Sin sesiones esta semana</div>`;
+  } else {
+    lista.innerHTML = estaSemana.map(p => {
+      const idx = getProyectos().findIndex(x => x.id === p.id);
+      const stCls = ESTADO_CLASS[p.estado] || 's-agendado';
+      return `
+        <div class="agenda-item" onclick="openDetail(${idx})" style="cursor:pointer;">
+          <div class="agenda-time-col">
+            <div class="agenda-time">${p.hora || '—'}</div>
+            <div class="agenda-ampm">${p.fecha ? DIAS[new Date(p.fecha+'T12:00:00').getDay()] : ''}</div>
+          </div>
+          <div class="agenda-vline"></div>
+          <div class="agenda-info">
+            <div class="agenda-name">${p.nombre}</div>
+            <div class="agenda-detail">${p.estilo}${p.zona ? ' · ' + p.zona : ''} · Ses. 1/${p.sesiones}</div>
+          </div>
+          <span class="status-pill ${stCls}">${p.estado}</span>
+        </div>`;
+    }).join('');
+  }
+}
+
+// ══════════════════════════════════════
 // RENDER PROYECTOS
 // ══════════════════════════════════════
-const DISEÑO_ETAPAS = ['Pendiente','Bosquejo','En revisión','Listo','Stencil'];
-const DISEÑO_LABELS = ['Pend.','Bosq.','Revis.','Listo','Stenc.'];
-const ESTADO_CLASS  = { 'Agendado':'s-agendado','Confirmado':'s-confirmado','En espera':'s-retoque','Tatuado':'s-tatuado' };
-
-function fmtMoney(n) {
-  return '$' + Number(n).toLocaleString('es-CL');
-}
-function fmtFecha(iso) {
-  if (!iso) return 'Sin fecha';
-  const d = new Date(iso + 'T00:00:00');
-  return d.toLocaleDateString('es-CL', { day:'numeric', month:'short' });
-}
-
 function renderProyectos() {
-  const proyectos = getProyectos();
+  let proyectos = getProyectos();
+  const query = (document.getElementById('buscador-proyectos')?.value || '').trim().toLowerCase();
+  if (query) {
+    proyectos = proyectos.filter(p =>
+      p.nombre.toLowerCase().includes(query) ||
+      (p.ig && p.ig.toLowerCase().includes(query)) ||
+      (p.estilo && p.estilo.toLowerCase().includes(query))
+    );
+  }
+
   const container = document.getElementById('proyectos-list');
   if (!container) return;
 
@@ -1329,13 +1716,15 @@ function renderProyectos() {
     container.innerHTML = `
       <div style="text-align:center; padding:40px 20px; color:var(--ink-hint);">
         <div style="font-size:32px; margin-bottom:10px;">🖋️</div>
-        <div style="font-size:14px; font-weight:500; color:var(--ink-soft); margin-bottom:6px;">Sin proyectos aún</div>
-        <div style="font-size:12px;">Agrega tu primer proyecto con el botón + Nuevo</div>
+        <div style="font-size:14px; font-weight:500; color:var(--ink-soft); margin-bottom:6px;">${query ? 'Sin resultados' : 'Sin proyectos aún'}</div>
+        <div style="font-size:12px;">${query ? 'Prueba otro nombre o estilo' : 'Agrega tu primer proyecto con el botón + Nuevo'}</div>
       </div>`;
     return;
   }
 
-  container.innerHTML = proyectos.map((p, idx) => {
+  const allProyectos = getProyectos();
+  container.innerHTML = proyectos.map((p) => {
+    const idx = allProyectos.findIndex(x => x.id === p.id);
     const etapaIdx = DISEÑO_ETAPAS.indexOf(p.disenoEtapa);
     const pagoTotal = Number(p.total) || 0;
     const pagoAbono = Number(p.abono) || 0;
@@ -1343,26 +1732,21 @@ function renderProyectos() {
     const pagadoTotal = p.estadoPago === 'Pagado';
     const statusCls = ESTADO_CLASS[p.estado] || 's-agendado';
 
-    const disenoSteps = DISEÑO_LABELS.map((lbl, i) => {
-      const cls = i < etapaIdx ? 'done' : i === etapaIdx ? 'active' : '';
-      const lblCls = i === etapaIdx ? 'active' : '';
-      return `<div class="design-step ${cls}"></div>`;
-    }).join('');
-    const disenoLabels = DISEÑO_LABELS.map((lbl, i) => {
-      const lblCls = i === etapaIdx ? 'active' : '';
-      return `<div class="design-lbl ${lblCls}">${lbl}</div>`;
-    }).join('');
-
+    const disenoSteps = DISEÑO_LABELS.map((_,i) =>
+      `<div class="design-step ${i < etapaIdx ? 'done' : i === etapaIdx ? 'active' : ''}"></div>`
+    ).join('');
+    const disenoLabels = DISEÑO_LABELS.map((lbl,i) =>
+      `<div class="design-lbl ${i === etapaIdx ? 'active' : ''}">${lbl}</div>`
+    ).join('');
     const pagoHTML = pagadoTotal
       ? `<div class="pago-nums"><span style="color:var(--olive);font-weight:500;">Pagado ✓</span><span>Total: ${fmtMoney(pagoTotal)}</span></div>`
       : `<div class="pago-track"><div class="pago-fill" style="width:${pagoPct}%;"></div></div>
          <div class="pago-nums"><span>Abono: ${fmtMoney(pagoAbono)}</span><span>Total: ${fmtMoney(pagoTotal)}</span></div>`;
-
     const fechaStr = p.fecha ? `${fmtFecha(p.fecha)}${p.hora ? ' · ' + p.hora : ''}` : 'Sin fecha';
     const igStr = [p.ig ? (p.ig.startsWith('@') ? p.ig : '@'+p.ig) : '', p.tel].filter(Boolean).join(' · ');
 
     return `
-      <div class="project-card">
+      <div class="project-card" onclick="openDetail(${idx})">
         <div class="pc-top">
           <div>
             <div class="pc-name">${p.nombre}</div>
@@ -1375,28 +1759,209 @@ function renderProyectos() {
           <span>${p.estilo}${p.zona ? ' · ' + p.zona : ''}</span>
         </div>
         <div class="pc-row">
-          <span>Sesiones: 0 / ${p.sesiones}</span>
+          <span>Sesiones: ${p.sesionesRealizadas||0} / ${p.sesiones}</span>
+          ${p.tamaño ? `<span style="font-size:11px;color:var(--ink-hint);">${p.tamaño}</span>` : ''}
         </div>
         <div class="pc-divider"></div>
-        <div style="font-size:10px;color:var(--ink-hint);letter-spacing:0.5px;margin-bottom:5px;">ESTADO DEL DISEÑO</div>
+        <div style="font-size:10px;color:var(--ink-hint);letter-spacing:0.5px;margin-bottom:5px;">DISEÑO</div>
         <div class="pc-design-row">${disenoSteps}</div>
         <div class="pc-design-labels">${disenoLabels}</div>
         <div class="pc-divider"></div>
-        <div style="font-size:10px;color:var(--ink-hint);letter-spacing:0.5px;margin-bottom:5px;">PAGO</div>
         <div class="pago-bar">${pagoHTML}</div>
-        ${p.notas ? `<div style="margin-top:10px;font-size:11px;color:var(--ink-hint);font-style:italic;">${p.notas}</div>` : ''}
-        <div style="margin-top:10px;display:flex;gap:8px;">
-          <button onclick="eliminarProyecto(${idx})" style="background:none;border:0.5px solid var(--beige-dark);border-radius:8px;padding:5px 10px;font-size:11px;color:var(--ink-hint);cursor:pointer;font-family:'DM Sans',sans-serif;">Eliminar</button>
-        </div>
       </div>`;
   }).join('');
 }
 
-function eliminarProyecto(idx) {
+// ══════════════════════════════════════
+// DETAIL PANEL
+// ══════════════════════════════════════
+let currentDetailIdx = -1;
+
+function openDetail(idx) {
+  currentDetailIdx = idx;
   const proyectos = getProyectos();
-  proyectos.splice(idx, 1);
+  const p = proyectos[idx];
+  if (!p) return;
+
+  // Header
+  document.getElementById('detail-nombre').textContent = p.nombre;
+  const pill = document.getElementById('detail-estado-pill');
+  pill.textContent = p.estado || 'Agendado';
+  pill.className = 'status-pill ' + (ESTADO_CLASS[p.estado] || 's-agendado');
+
+  // Cliente
+  document.getElementById('d-ig').textContent = p.ig ? (p.ig.startsWith('@') ? p.ig : '@'+p.ig) : '—';
+  document.getElementById('d-tel').textContent = p.tel || '—';
+  document.getElementById('d-email').textContent = p.email || '—';
+
+  // Tatuaje
+  document.getElementById('d-estilo').textContent = p.estilo || '—';
+  document.getElementById('d-zona').textContent = p.zona || '—';
+  document.getElementById('d-tamaño').textContent = p.tamaño || '—';
+  document.getElementById('d-sesiones').textContent = `${p.sesionesRealizadas||0} realizadas / ${p.sesiones} total`;
+  document.getElementById('d-fecha').textContent = p.fecha ? `${fmtFechaDia(p.fecha)}${p.hora ? ' · ' + p.hora : ''}` : '—';
+
+  const descWrap = document.getElementById('d-desc-wrap');
+  if (p.desc) { descWrap.textContent = p.desc; descWrap.style.display = 'block'; }
+  else descWrap.style.display = 'none';
+
+  // Diseño stage
+  renderDetailDiseno(p);
+
+  // Pago
+  document.getElementById('d-total').textContent = fmtMoney(p.total);
+  document.getElementById('d-abono').textContent = fmtMoney(p.abono);
+  document.getElementById('d-pago-sel').value = p.estadoPago || 'Sin abono';
+  const pagoTotal = Number(p.total)||0;
+  const pagoAbono = Number(p.abono)||0;
+  const pct = pagoTotal > 0 ? Math.round((pagoAbono/pagoTotal)*100) : (p.estadoPago==='Pagado' ? 100 : 0);
+  document.getElementById('d-pago-fill').style.width = Math.min(pct,100) + '%';
+
+  // Fotos referencia
+  renderFotosRef(p);
+
+  // Diseño final
+  const dImg = document.getElementById('d-diseno-img');
+  const dLabel = document.getElementById('d-diseno-upload-label');
+  if (p.fotoDiseno) {
+    dImg.src = p.fotoDiseno; dImg.style.display = 'block';
+    dLabel.style.display = 'none';
+  } else {
+    dImg.style.display = 'none'; dLabel.style.display = 'flex';
+  }
+
+  // Notas
+  const notasSec = document.getElementById('d-notas-section');
+  if (p.notas) {
+    document.getElementById('d-notas-val').textContent = p.notas;
+    notasSec.style.display = 'block';
+  } else notasSec.style.display = 'none';
+
+  document.getElementById('detailPanel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderDetailDiseno(p) {
+  const etapaIdx = DISEÑO_ETAPAS.indexOf(p.disenoEtapa);
+  document.getElementById('d-diseno-steps').innerHTML = DISEÑO_LABELS.map((_,i) =>
+    `<div class="design-step ${i < etapaIdx ? 'done' : i === etapaIdx ? 'active' : ''}"></div>`
+  ).join('');
+  document.getElementById('d-diseno-labels').innerHTML = DISEÑO_LABELS.map((lbl,i) =>
+    `<div class="design-lbl ${i === etapaIdx ? 'active' : ''}">${lbl}</div>`
+  ).join('');
+  document.getElementById('d-diseno-btns').innerHTML = DISEÑO_ETAPAS.map((et,i) => `
+    <button onclick="updateDiseno('${et}')" style="padding:5px 10px;border-radius:20px;border:0.5px solid ${et===p.disenoEtapa?'var(--terra)':'var(--beige-dark)'};background:${et===p.disenoEtapa?'var(--terra-faint)':'var(--card)'};color:${et===p.disenoEtapa?'var(--terra)':'var(--ink-soft)'};font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;">${et}</button>
+  `).join('');
+}
+
+function renderFotosRef(p) {
+  const grid = document.getElementById('d-fotos-ref');
+  const fotos = p.fotosReferencia || [];
+  const thumbs = fotos.map((src,i) =>
+    `<img src="${src}" class="foto-thumb" onclick="openLightbox('${src}')" alt="ref ${i+1}">`
+  ).join('');
+  grid.innerHTML = thumbs + `
+    <label class="foto-add" style="cursor:pointer;">
+      <div class="foto-add-icon">+</div>
+      <div>Agregar</div>
+      <input type="file" accept="image/*" multiple style="display:none;" onchange="addFotosRef(event)">
+    </label>`;
+}
+
+function closeDetail() {
+  document.getElementById('detailPanel').classList.remove('open');
+  document.body.style.overflow = '';
+  currentDetailIdx = -1;
+}
+
+// Cambiar estado ciclando
+const ESTADOS = ['Agendado','Confirmado','Tatuado','En espera'];
+function cycleEstado() {
+  const proyectos = getProyectos();
+  const p = proyectos[currentDetailIdx];
+  if (!p) return;
+  const idx = ESTADOS.indexOf(p.estado);
+  p.estado = ESTADOS[(idx + 1) % ESTADOS.length];
   saveProyectos(proyectos);
-  renderProyectos();
+  const pill = document.getElementById('detail-estado-pill');
+  pill.textContent = p.estado;
+  pill.className = 'status-pill ' + (ESTADO_CLASS[p.estado] || 's-agendado');
+  renderProyectos(); renderInicio();
+}
+
+function updateDiseno(etapa) {
+  const proyectos = getProyectos();
+  const p = proyectos[currentDetailIdx];
+  if (!p) return;
+  p.disenoEtapa = etapa;
+  saveProyectos(proyectos);
+  renderDetailDiseno(p);
+  renderProyectos(); renderInicio();
+}
+
+function updatePago(val) {
+  const proyectos = getProyectos();
+  const p = proyectos[currentDetailIdx];
+  if (!p) return;
+  p.estadoPago = val;
+  saveProyectos(proyectos);
+  renderProyectos(); renderInicio();
+}
+
+function addFotosRef(event) {
+  const files = Array.from(event.target.files);
+  const proyectos = getProyectos();
+  const p = proyectos[currentDetailIdx];
+  if (!p) return;
+  if (!p.fotosReferencia) p.fotosReferencia = [];
+  let loaded = 0;
+  files.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      p.fotosReferencia.push(e.target.result);
+      loaded++;
+      if (loaded === files.length) {
+        saveProyectos(proyectos);
+        renderFotosRef(p);
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function addFotoDiseno(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const proyectos = getProyectos();
+  const p = proyectos[currentDetailIdx];
+  if (!p) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    p.fotoDiseno = e.target.result;
+    saveProyectos(proyectos);
+    const dImg = document.getElementById('d-diseno-img');
+    dImg.src = p.fotoDiseno; dImg.style.display = 'block';
+    document.getElementById('d-diseno-upload-label').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function confirmarEliminar() {
+  if (!confirm('¿Eliminar este proyecto? No se puede deshacer.')) return;
+  const proyectos = getProyectos();
+  proyectos.splice(currentDetailIdx, 1);
+  saveProyectos(proyectos);
+  closeDetail();
+  renderProyectos(); renderInicio();
+}
+
+// Lightbox
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
 }
 
 // ══════════════════════════════════════
@@ -1420,17 +1985,13 @@ function renderInsumos() {
     return;
   }
 
-  // Calcular total del mes actual
   const ahora = new Date();
-  const mesActual = ahora.getMonth();
-  const añoActual = ahora.getFullYear();
   let totalMes = 0;
   insumos.forEach(i => {
     if (i.fecha) {
-      const d = new Date(i.fecha + 'T00:00:00');
-      if (d.getMonth() === mesActual && d.getFullYear() === añoActual) {
-        totalMes += Number(i.precio) || 0;
-      }
+      const d = new Date(i.fecha + 'T12:00:00');
+      if (d.getMonth()===ahora.getMonth() && d.getFullYear()===ahora.getFullYear())
+        totalMes += Number(i.precio)||0;
     }
   });
 
@@ -1441,14 +2002,14 @@ function renderInsumos() {
           <div style="flex:1;min-width:0;">
             <div style="font-size:13px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.producto}</div>
             <div style="font-size:11px;color:var(--ink-hint);margin-top:1px;">
-              ${item.categoria ? item.categoria + ' · ' : ''}${item.proveedor ? item.proveedor + ' · ' : ''}${item.fecha ? fmtFecha(item.fecha) : ''}
+              ${[item.categoria, item.proveedor, item.fecha ? fmtFecha(item.fecha) : ''].filter(Boolean).join(' · ')}
             </div>
           </div>
           <div style="text-align:right;flex-shrink:0;">
             <div style="font-size:13px;font-weight:500;color:var(--ink);">${fmtMoney(item.precio)}</div>
-            <div style="font-size:10px;color:var(--olive);">${item.cantidad || 1} ${item.unidad || 'u.'}</div>
+            <div style="font-size:10px;color:var(--olive);">${item.cantidad||1} ${item.unidad||'u.'}</div>
           </div>
-          <button onclick="eliminarInsumo(${idx})" style="background:none;border:none;color:var(--ink-hint);cursor:pointer;font-size:16px;padding:0 0 0 4px;line-height:1;">×</button>
+          <button onclick="eliminarInsumo(${idx})" style="background:none;border:none;color:var(--ink-hint);cursor:pointer;font-size:18px;padding:0 0 0 4px;line-height:1;">×</button>
         </div>`).join('')}
     </div>`;
 
@@ -1471,11 +2032,9 @@ const TOTAL_STEPS = 4;
 let sesiones = 1;
 
 function openModal() {
-  currentStep = 1;
-  sesiones = 1;
+  currentStep = 1; sesiones = 1;
   document.getElementById('ses-count').textContent = 1;
-  resetForm();
-  updateStepUI();
+  resetForm(); updateStepUI();
   document.getElementById('modalNuevoProyecto').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1507,72 +2066,65 @@ function updateStepUI() {
     const line = document.getElementById('sline-' + i);
     if (line) line.className = 'step-line' + (i < currentStep ? ' done' : '');
   }
-  const btnBack = document.getElementById('btn-back');
+  document.getElementById('btn-back').style.display = currentStep > 1 ? 'block' : 'none';
   const btnNext = document.getElementById('btn-next');
-  btnBack.style.display = currentStep > 1 ? 'block' : 'none';
   btnNext.textContent = currentStep === TOTAL_STEPS ? 'Guardar proyecto ✓' : 'Continuar →';
   btnNext.className = 'btn-next' + (currentStep === TOTAL_STEPS ? ' success' : '');
 }
 
 function validateStep() {
   if (currentStep === 1) {
-    const nombre = document.getElementById('f-nombre').value.trim();
-    if (!nombre) { highlight('f-nombre'); return false; }
+    const n = document.getElementById('f-nombre').value.trim();
+    if (!n) { highlight('f-nombre'); return false; }
   }
   if (currentStep === 2) {
-    const estilo = document.querySelector('#chip-estilo .chip.selected');
-    const zona   = document.querySelector('#chip-zona .chip.selected');
-    if (!estilo) { highlightGroup('#chip-estilo'); return false; }
-    if (!zona)   { highlightGroup('#chip-zona');   return false; }
+    if (!document.querySelector('#chip-estilo .chip.selected')) { highlightGroup('#chip-estilo'); return false; }
+    if (!document.querySelector('#chip-zona .chip.selected'))   { highlightGroup('#chip-zona');   return false; }
   }
   if (currentStep === 3) {
-    const total = document.getElementById('f-total').value.trim();
-    if (!total) { highlight('f-total'); return false; }
+    if (!document.getElementById('f-total').value.trim()) { highlight('f-total'); return false; }
   }
   return true;
 }
 
 function highlight(id) {
-  const el = document.getElementById(id);
-  el.focus(); el.style.borderColor = 'var(--terra)';
+  const el = document.getElementById(id); el.focus();
+  el.style.borderColor = 'var(--terra)';
   setTimeout(() => el.style.borderColor = '', 1500);
 }
 function highlightGroup(sel) {
   const el = document.querySelector(sel);
   el.style.outline = '1.5px solid var(--terra)'; el.style.borderRadius = '8px';
-  setTimeout(() => { el.style.outline = ''; }, 1400);
+  setTimeout(() => el.style.outline = '', 1400);
 }
 
 function nextStep() {
   if (!validateStep()) return;
   if (currentStep < TOTAL_STEPS) {
-    currentStep++;
-    updateStepUI();
+    currentStep++; updateStepUI();
     document.getElementById('sheetNuevoProyecto').scrollTop = 0;
-  } else {
-    guardarProyecto();
-  }
+  } else { guardarProyecto(); }
 }
 
 function prevStep() {
   if (currentStep > 1) {
-    currentStep--;
-    updateStepUI();
+    currentStep--; updateStepUI();
     document.getElementById('sheetNuevoProyecto').scrollTop = 0;
   }
 }
 
 function guardarProyecto() {
   const proyecto = {
-    id: Date.now(),
+    id:          Date.now(),
     nombre:      document.getElementById('f-nombre').value.trim(),
     ig:          document.getElementById('f-ig').value.trim(),
     tel:         document.getElementById('f-tel').value.trim(),
     email:       document.getElementById('f-email').value.trim(),
     estilo:      document.querySelector('#chip-estilo .chip.selected')?.textContent || '',
     zona:        document.querySelector('#chip-zona .chip.selected')?.textContent || '',
+    tamaño:      document.querySelector('#chip-tamaño .chip.selected')?.textContent || '',
     desc:        document.getElementById('f-desc').value.trim(),
-    sesiones:    sesiones,
+    sesiones,
     sesionesRealizadas: 0,
     total:       document.getElementById('f-total').value.trim(),
     abono:       document.getElementById('f-abono').value.trim(),
@@ -1582,21 +2134,21 @@ function guardarProyecto() {
     disenoEtapa: document.querySelector('#dstage-group .dstage.selected .dstage-name')?.textContent || 'Pendiente',
     estado:      document.querySelector('#chip-estado .chip.selected')?.textContent || 'Agendado',
     notas:       document.getElementById('f-notas').value.trim(),
+    fotosReferencia: [],
+    fotoDiseno:  null,
     creadoEn:    new Date().toISOString()
   };
 
   const proyectos = getProyectos();
-  proyectos.unshift(proyecto); // Más reciente primero
+  proyectos.unshift(proyecto);
   saveProyectos(proyectos);
-  renderProyectos();
+  renderProyectos(); renderInicio();
 
-  // Mostrar éxito
   document.querySelectorAll('#sheetNuevoProyecto .form-step').forEach(s => s.classList.remove('active'));
   document.getElementById('sheet-footer').style.display = 'none';
   document.getElementById('success-screen').classList.add('active');
   document.getElementById('success-title').textContent = proyecto.nombre + ' registrado';
   document.getElementById('success-sub').textContent = 'El proyecto ya aparece en tu lista.';
-
   setTimeout(() => closeModal(), 2000);
 }
 
@@ -1628,12 +2180,8 @@ function resetForm() {
 // MODAL INSUMO
 // ══════════════════════════════════════
 function openModalInsumo() {
-  document.getElementById('i-producto').value = '';
-  document.getElementById('i-precio').value   = '';
-  document.getElementById('i-cantidad').value = '';
-  document.getElementById('i-unidad').value   = '';
-  document.getElementById('i-proveedor').value = '';
-  document.getElementById('i-fecha').value    = '';
+  ['i-producto','i-precio','i-cantidad','i-unidad','i-proveedor','i-fecha']
+    .forEach(id => document.getElementById(id).value = '');
   document.querySelectorAll('#chip-categoria .chip').forEach(c => c.classList.remove('selected'));
   document.querySelector('#chip-categoria .chip').classList.add('selected');
   document.getElementById('success-insumo').classList.remove('active');
@@ -1663,15 +2211,15 @@ function guardarInsumo() {
   if (!precio)   { highlight('i-precio');   return; }
 
   const insumo = {
-    id:         Date.now(),
+    id:        Date.now(),
     producto,
-    categoria:  document.querySelector('#chip-categoria .chip.selected')?.textContent || '',
+    categoria: document.querySelector('#chip-categoria .chip.selected')?.textContent || '',
     precio,
-    cantidad:   document.getElementById('i-cantidad').value.trim() || '1',
-    unidad:     document.getElementById('i-unidad').value.trim() || 'u.',
-    proveedor:  document.getElementById('i-proveedor').value.trim(),
-    fecha:      document.getElementById('i-fecha').value,
-    creadoEn:   new Date().toISOString()
+    cantidad:  document.getElementById('i-cantidad').value.trim() || '1',
+    unidad:    document.getElementById('i-unidad').value.trim() || 'u.',
+    proveedor: document.getElementById('i-proveedor').value.trim(),
+    fecha:     document.getElementById('i-fecha').value,
+    creadoEn:  new Date().toISOString()
   };
 
   const insumos = getInsumos();
@@ -1688,6 +2236,7 @@ function guardarInsumo() {
 // INIT
 // ══════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
+  renderInicio();
   renderProyectos();
   renderInsumos();
 });
