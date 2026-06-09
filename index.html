@@ -9,19 +9,23 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 :root {
-  --bg:#F0EEE8; --surface:#fff; --surface2:#F8F6F2;
+  --bg:#F5F0E6; --surface:#FDFCF8; --surface2:#EBF2EC;
   --border:rgba(0,0,0,0.08); --border2:rgba(0,0,0,0.05);
-  --text1:#322D27; --text2:#7F7265; --text3:#AAAAAE;
-  --amber:#BF8440; --amber-light:#FDF4E8;
-  --dark:#322D27; --mist:#E2E1EB; --ash:#AAAAAE; --stone:#7F7265;
+  --text1:#1a1a14; --text2:#4a6b52; --text3:#aaa;
+  --amber:#C9A84C; --amber-light:#EBF2EC;
+  --dark:#2A5038; --mist:#e0d8ca; --ash:#aaa; --stone:#4a6b52;
   --danger:#A32D2D;
   --font:'DM Sans',sans-serif; --mono:'DM Mono',monospace;
+  --hero-bg:#EBF2EC; --hero-border:#c8deca;
+  --hero-eyebrow:#2A5038; --hero-name:#1a2e1e; --hero-ig:#7a9e82; --hero-sub:#4a6b52;
   --r:10px; --rsm:6px; --nav:64px; --top:56px;
 }
 [data-dark="true"] {
-  --bg:#1A1713; --surface:#22201C; --surface2:#2A2722;
+  --hero-bg:#38352F; --hero-border:rgba(255,255,255,0.07);
+  --hero-eyebrow:#C9A84C; --hero-name:#F5F0E6; --hero-ig:#7a7468; --hero-sub:#a09c94;
+  --bg:#2A2722; --surface:#38352F; --surface2:#312E29;
   --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.04);
-  --text1:#E2E1EB; --text2:#7F7265; --text3:#4A4540; --amber-light:#2A2218;
+  --text1:#F5F0E6; --text2:#a09c94; --text3:#5a5650; --amber-light:#312E29;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--text1);font-size:14px;}
@@ -221,6 +225,26 @@ body{display:flex;justify-content:center;}
 .guia-icon{width:40px;height:40px;border-radius:var(--rsm);background:var(--dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .guia-title{font-size:14px;font-weight:500;color:var(--text1);}
 .guia-desc{font-size:12px;color:var(--text3);margin-top:2px;}
+/* GUIA DETAIL */
+.guia-hero{padding:1.5rem 1.25rem 1.25rem;border-bottom:0.5px solid var(--border);}
+.guia-hero-icon{width:48px;height:48px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin-bottom:.875rem;}
+.guia-hero-title{font-size:20px;font-weight:500;color:var(--text1);}
+.guia-hero-desc{font-size:13px;color:var(--text2);margin-top:4px;line-height:1.5;}
+.guia-bloque{padding:1rem 1.25rem;border-bottom:0.5px solid var(--border2);}
+.guia-bloque-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.5rem;display:flex;align-items:center;gap:6px;}
+.guia-bloque-content{font-size:13px;color:var(--text1);line-height:1.65;}
+.guia-bloque-content li{margin-left:1.1rem;margin-bottom:3px;}
+.guia-bloque-content strong{color:var(--amber);font-weight:500;}
+.guia-bloque.alerta{background:rgba(163,45,45,.06);}
+.guia-bloque.alerta .guia-bloque-label{color:var(--danger);}
+/* GUIA EDITOR */
+.editor-bloque{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r);margin-bottom:.75rem;overflow:hidden;}
+.editor-bloque-header{padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between;border-bottom:0.5px solid var(--border2);}
+.editor-bloque-label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);}
+.editor-bloque-body{padding:.875rem 1rem;}
+.editor-bloque textarea{background:var(--surface2);border:0.5px solid var(--border);border-radius:var(--rsm);padding:9px 11px;font-size:13px;color:var(--text1);font-family:var(--font);width:100%;outline:none;resize:none;line-height:1.6;}
+.editor-bloque textarea:focus{border-color:var(--amber);}
+.restore-btn{font-size:11px;color:var(--amber);cursor:pointer;}
 
 /* TOAST */
 #toast{position:fixed;bottom:calc(var(--nav) + 12px);left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark);color:var(--mist);padding:10px 18px;border-radius:20px;font-size:13px;opacity:0;transition:all .3s;z-index:999;white-space:nowrap;pointer-events:none;}
@@ -249,8 +273,7 @@ body{display:flex;justify-content:center;}
   </div>
   <div class="screen-body"><div class="pad">
     <div class="section-label">Próxima cita</div>
-    <div id="home-next-card" style="background:var(--dark);border-radius:var(--r);padding:1.1rem;position:relative;overflow:hidden;margin-bottom:1rem;">
-      <div style="position:absolute;right:-20px;top:-20px;width:90px;height:90px;border-radius:50%;background:var(--amber);opacity:.08"></div>
+    <div id="home-next-card" style="background:var(--hero-bg);border:0.5px solid var(--hero-border);border-radius:var(--r);padding:1.1rem;position:relative;overflow:hidden;margin-bottom:1rem;">
       <div id="home-next-content"></div>
     </div>
     <div class="section-label">Este mes</div>
@@ -391,22 +414,108 @@ body{display:flex;justify-content:center;}
     <div class="topbar-title">Guías enviables</div>
   </div>
   <div class="screen-body"><div class="pad">
-    <div class="guia-card">
-      <div class="guia-icon" style="background:#1e3a2f"><i class="ti ti-arrow-down-circle" style="color:#4ade80;font-size:18px"></i></div>
-      <div><div class="guia-title">Cuidado pre-tattoo</div><div class="guia-desc">Instrucciones antes de la sesión</div></div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:1rem;line-height:1.5">Crea y personaliza las guías que envías a tus clientes. Cada una tiene contenido sugerido que puedes editar y hacer tuyo.</div>
+
+    <div class="guia-card" data-guia="pre">
+      <div class="guia-icon" style="background:#1e3a2f"><i class="ti ti-sun" style="color:#4ade80;font-size:18px"></i></div>
+      <div style="flex:1">
+        <div class="guia-title">Preparación pre-tattoo</div>
+        <div class="guia-desc">Instrucciones antes de la sesión</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <i class="ti ti-chevron-right" style="color:var(--text3)"></i>
+      </div>
     </div>
-    <div class="guia-card">
-      <div class="guia-icon" style="background:#2d1e3a"><i class="ti ti-heart" style="color:#c084fc;font-size:18px"></i></div>
-      <div><div class="guia-title">Cuidado post-tattoo</div><div class="guia-desc">Instrucciones de cicatrización</div></div>
+
+    <div class="guia-card" data-guia="post-film">
+      <div class="guia-icon" style="background:#2a1e10"><i class="ti ti-heart-handshake" style="color:var(--amber);font-size:18px"></i></div>
+      <div style="flex:1">
+        <div class="guia-title">Post-tattoo · Film clásico</div>
+        <div class="guia-desc">Con parche y film transparente</div>
+      </div>
+      <i class="ti ti-chevron-right" style="color:var(--text3)"></i>
     </div>
-    <div class="guia-card">
-      <div class="guia-icon" style="background:#1e2d3a"><i class="ti ti-file-text" style="color:#60a5fa;font-size:18px"></i></div>
-      <div><div class="guia-title">Formulario DSN N°304</div><div class="guia-desc">Consentimiento informado</div></div>
+
+    <div class="guia-card" data-guia="post-2piel">
+      <div class="guia-icon" style="background:#1e2a3a"><i class="ti ti-bandage" style="color:#60a5fa;font-size:18px"></i></div>
+      <div style="flex:1">
+        <div class="guia-title">Post-tattoo · Segunda piel</div>
+        <div class="guia-desc">Con Tagaderm o Saniderm</div>
+      </div>
+      <i class="ti ti-chevron-right" style="color:var(--text3)"></i>
     </div>
-    <div style="margin-top:1rem;padding:1rem;background:var(--surface);border-radius:var(--r);border:0.5px solid var(--border)">
-      <div style="font-size:12px;color:var(--text3);text-align:center">Próximamente podrás enviar estas guías directamente por WhatsApp.</div>
+
+    <div class="guia-card" data-guia="consentimiento">
+      <div class="guia-icon" style="background:#2d1e1e"><i class="ti ti-file-certificate" style="color:#f87171;font-size:18px"></i></div>
+      <div style="flex:1">
+        <div class="guia-title">Consentimiento informado</div>
+        <div class="guia-desc">DS N°304 — firma digital del cliente</div>
+      </div>
+      <i class="ti ti-chevron-right" style="color:var(--text3)"></i>
     </div>
+
   </div></div>
+</div>
+
+<!-- ══ GUÍA DETALLE ══ -->
+<div class="screen" id="screen-guia-detalle">
+  <div class="topbar">
+    <button class="back-btn" id="btn-back-guia-detalle"><i class="ti ti-arrow-left"></i></button>
+    <div class="topbar-title" id="guia-detalle-title">Guía</div>
+    <button class="icon-btn" id="btn-editar-guia"><i class="ti ti-edit"></i></button>
+  </div>
+  <div class="screen-body">
+    <div id="guia-detalle-body"></div>
+  </div>
+  <div class="footer-btns">
+    <button class="btn btn-secondary" style="flex:1" id="btn-guia-enviar"><i class="ti ti-send" style="font-size:14px"></i> Enviar</button>
+    <button class="btn btn-primary" style="flex:2" id="btn-guia-link"><i class="ti ti-link" style="font-size:14px"></i> Copiar link</button>
+  </div>
+</div>
+
+<!-- ══ GUÍA EDITOR ══ -->
+<div class="screen" id="screen-guia-editor">
+  <div class="topbar">
+    <button class="back-btn" id="btn-back-guia-editor"><i class="ti ti-arrow-left"></i></button>
+    <div class="topbar-title" id="guia-editor-title">Editar guía</div>
+  </div>
+  <div class="screen-body"><div class="pad" id="guia-editor-body"></div></div>
+  <div class="footer-btns">
+    <button class="btn btn-secondary" style="flex:1" id="btn-cancel-guia-edit">Cancelar</button>
+    <button class="btn btn-primary" style="flex:2" id="btn-save-guia-edit">Guardar cambios</button>
+  </div>
+</div>
+
+<!-- ══ MODAL: ENVIAR GUÍA ══ -->
+<div class="modal-overlay" id="modal-enviar-guia">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Enviar guía</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Elige cómo compartir esta guía con tu cliente.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem">
+      <div id="btn-enviar-wa" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--r);background:var(--surface2);border:0.5px solid var(--border);cursor:pointer">
+        <div style="width:40px;height:40px;border-radius:var(--rsm);background:#1a3a23;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="ti ti-brand-whatsapp" style="color:#4ade80;font-size:20px"></i>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--text1)">Texto para WhatsApp</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:2px">Copia el texto formateado y pégalo en el chat</div>
+        </div>
+        <i class="ti ti-copy" style="margin-left:auto;color:var(--text3)"></i>
+      </div>
+      <div id="btn-enviar-link" style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--r);background:var(--surface2);border:0.5px solid var(--border);cursor:pointer">
+        <div style="width:40px;height:40px;border-radius:var(--rsm);background:#1e2a3a;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <i class="ti ti-world" style="color:#60a5fa;font-size:20px"></i>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--text1)">Link compartible</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:2px">Abre una página web con tu guía y branding</div>
+        </div>
+        <i class="ti ti-external-link" style="margin-left:auto;color:var(--text3)"></i>
+      </div>
+    </div>
+    <button class="btn btn-secondary btn-full" id="btn-cancel-enviar-guia">Cancelar</button>
+  </div>
 </div>
 
 <!-- ══ STATS ══ -->
@@ -672,10 +781,17 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
   var el = document.getElementById(id);
   if (el) el.classList.add('active');
-  var isNav = NAV_SCREENS.indexOf(id) > -1;
-  document.getElementById('navbar').style.display = isNav ? 'flex' : 'none';
+  // navbar siempre visible — solo cambia el ítem activo
+  var activeNav = NAV_SCREENS.indexOf(id) > -1 ? id : null;
+  // para sub-pantallas, mantener activo el ítem padre
+  var parentMap = {
+    'screen-detalle':'screen-proyectos',
+    'screen-guias':'screen-mas','screen-guia-detalle':'screen-mas','screen-guia-editor':'screen-mas',
+    'screen-stats':'screen-mas','screen-perfil':'screen-mas'
+  };
+  if (!activeNav && parentMap[id]) activeNav = parentMap[id];
   document.querySelectorAll('.nav-item').forEach(function(n){
-    n.classList.toggle('active', n.dataset.screen === id);
+    n.classList.toggle('active', n.dataset.screen === activeNav);
   });
 }
 
@@ -706,6 +822,7 @@ function renderScreen(id) {
   else if (id === 'screen-insumos') renderInsumos();
   else if (id === 'screen-perfil') renderPerfil();
   else if (id === 'screen-stats') renderStats();
+  // guia screens re-render is handled by their own open functions
 }
 
 // ══ HOME ══
@@ -726,12 +843,15 @@ function renderHome() {
   var nc = document.getElementById('home-next-content');
   if (next) {
     var isToday = next.fecha === todayStr();
-    nc.innerHTML = '<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#4A4540;margin-bottom:4px">'+(isToday?'Hoy':'Próximamente')+' · '+fmtFecha(next.fecha)+'</div>'
-      +'<div style="font-size:19px;font-weight:500;color:var(--mist)">'+next.clienteNombre+'</div>'
-      +'<div style="font-size:13px;color:var(--stone);margin-top:3px">'+next.tattooNombre+' · '+(next.zona||'—')+' · Sesión '+((next.sesionesHechas||0)+1)+'/'+next.sesiones+'</div>'
-      +'<div style="margin-top:10px;display:flex;align-items:center;gap:8px"><div style="background:var(--amber);border-radius:4px;padding:5px 12px;font-size:14px;font-weight:500;color:#fff">'+(next.hora||'—')+'</div></div>';
+    nc.innerHTML = '<div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--hero-eyebrow);margin-bottom:8px">Próxima sesión</div>'
+      +'<div style="display:flex;align-items:baseline;gap:7px;margin-bottom:3px">'
+      +'<span style="font-size:19px;font-weight:500;color:var(--hero-name)">'+next.clienteNombre+'</span>'
+      +(next.ig?'<span style="font-size:12px;color:var(--hero-ig)">'+next.ig+'</span>':'')
+      +'</div>'
+      +'<div style="font-size:12px;color:var(--hero-sub);margin-bottom:12px">'+next.tattooNombre+' · '+(next.zona||'—')+' · Sesión '+((next.sesionesHechas||0)+1)+'/'+next.sesiones+'</div>'
+      +'<div style="display:inline-block;background:var(--amber);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:#1a1a10">'+(isToday?'Hoy':''+fmtFecha(next.fecha))+(next.hora?' · '+next.hora:'')+'</div>';
   } else {
-    nc.innerHTML = '<div style="font-size:13px;color:#4A4540;text-align:center;padding:.5rem 0">Sin citas próximas agendadas</div>';
+    nc.innerHTML = '<div style="font-size:13px;color:var(--hero-sub);text-align:center;padding:.5rem 0">Sin citas próximas agendadas</div>';
   }
 
   document.getElementById('stat-total').textContent = proyectos.length;
@@ -1122,7 +1242,208 @@ function toggleDark() {
   document.getElementById('dark-toggle').classList.toggle('on', !isDark);
 }
 
-// ══ EVENT LISTENERS — all wired here, no inline onclick ══
+// ══ GUÍAS ══
+var GUIAS_DEFAULT = {
+  'pre': {
+    id: 'pre',
+    titulo: 'Preparación pre-tattoo',
+    desc: 'Lo que necesitas hacer antes de llegar a tu sesión.',
+    iconBg: '#1e3a2f', iconColor: '#4ade80', icon: 'ti-sun',
+    bloques: [
+      { id:'pre-dias', label:'Días previos', contenido:'Hidrata la zona a tatuar con crema (sin perfume) 1 a 2 veces al día durante los 5 días anteriores. El día de la sesión NO apliques crema.\n\nEvita la exposición al sol directa en la zona al menos 2 semanas antes.\n\nNo consumas alcohol las 24 horas previas — adelgaza la sangre y complica el proceso.\n\nEvita aspirina u otros anticoagulantes sin indicación médica.' },
+      { id:'pre-dia', label:'El día de la sesión', contenido:'Duerme bien la noche anterior. El descanso reduce la sensibilidad al dolor y te ayuda a estar quieto.\n\nCome bien antes de llegar — no vengas en ayunas. Una bajada de azúcar durante la sesión es más común de lo que parece.\n\nBebe bastante agua. La piel hidratada absorbe mejor la tinta.\n\nVen limpio y con ropa cómoda que dé acceso fácil a la zona y que no te importe manchar.' },
+      { id:'pre-llevar', label:'Qué traer', contenido:'Para sesiones largas: agua, un snack (fruta, barras, algo liviano), auriculares o algo con qué entretenerte.\n\nAvisa a tu tatuador si estás tomando algún medicamento, tienes alergias o alguna condición de salud relevante.' },
+      { id:'pre-no', label:'Qué evitar', contenido:'No afeites la zona el mismo día — puede irritar la piel. Tu tatuador lo hace si es necesario.\n\nNo tomes alcohol la noche anterior ni el día de la sesión.\n\nNo vengas con la piel quemada por el sol en la zona a tatuar.' }
+    ]
+  },
+  'post-film': {
+    id: 'post-film',
+    titulo: 'Post-tattoo · Film clásico',
+    desc: 'Cuidados para tu tatuaje con parche y film transparente.',
+    iconBg: '#2a1e10', iconColor: '#BF8440', icon: 'ti-heart-handshake',
+    bloques: [
+      { id:'pf-parche1', label:'Primeras horas', contenido:'Al salir del estudio llevas un parche protector. No lo retires antes de lo indicado — aunque quieras "dejarlo respirar", el parche protege la herida abierta de bacterias mientras tu piel forma su primera capa protectora.' },
+      { id:'pf-dia1', label:'Día 1 — retirar y limpiar', contenido:'Al día siguiente retira el parche con cuidado.\n\nLava el tatuaje con agua tibia y jabón neutro (sin alcohol ni perfume) usando solo las manos — sin esponja.\n\nSeca sin refregar, solo presionando suavemente con papel de cocina limpio. No uses toallas de tela.\n\nVuelve a cubrir con film limpio SIN crema por el resto del día.' },
+      { id:'pf-dias2-3', label:'Días 2 y 3 — segundo parche', contenido:'Repite el proceso de limpieza (agua + jabón neutro + secar con papel).\n\nAplica una capa fina de crema cicatrizante 2 a 3 veces al día.\nCremas recomendadas: Aquaphor (Eucerin) o Cicaplast (La Roche-Posay).\n\nCubre nuevamente con film por 3 a 6 días más (ideal 6). Solo aplica la crema necesaria — demasiada humedad no deja respirar la piel.' },
+      { id:'pf-cicatrizacion', label:'Cicatrización (2–3 semanas)', contenido:'El proceso de cicatrización superficial dura entre 2 y 3 semanas. Es normal sentir picazón — no te rasques.\n\nSi aparecen pequeñas costras, déjalas caer solas. No las arranques.\n\nMantén el tatuaje hidratado con crema sin perfume durante todo el período.' },
+      { id:'pf-restricciones', label:'Lo que debes evitar', contenido:'☒ No te bañes en piscina, mar, río, lago, sauna o jacuzzi durante las primeras 2 a 3 semanas.\n☒ No expongas el tatuaje a agua muy caliente (ducha tibia está bien).\n☒ Nada de deporte intenso ni contacto físico por al menos 1 semana.\n☒ Sin sol directo en la zona durante 2 semanas. Después usa protector solar SPF 50+.' },
+      { id:'pf-alarma', label:'⚠ Señales de alarma', contenido:'Consulta a un médico si notas: enrojecimiento excesivo que empeora, hinchazón persistente, calor intenso en la zona o secreción de pus. Estos pueden ser señales de infección.', alerta: true }
+    ]
+  },
+  'post-2piel': {
+    id: 'post-2piel',
+    titulo: 'Post-tattoo · Segunda piel',
+    desc: 'Cuidados para tu tatuaje con Tagaderm o Saniderm.',
+    iconBg: '#1e2a3a', iconColor: '#60a5fa', icon: 'ti-bandage',
+    bloques: [
+      { id:'sp-que-es', label:'¿Qué es la segunda piel?', contenido:'Tagaderm, Saniderm o similares son vendajes médicos transparentes, impermeables y transpirables. Crean una barrera contra bacterias mientras dejan pasar el oxígeno que necesita tu piel para sanar. A diferencia del film clásico, puedes ducharte con él puesto.' },
+      { id:'sp-parche1', label:'Primer parche (8 a 24 horas)', contenido:'Tu tatuador lo aplica al terminar la sesión. Es normal que se acumule líquido (plasma, algo de sangre) debajo del vendaje — no te asustes, es parte del proceso.\n\nRetíralo entre 8 y 24 horas, dependiendo de cuánto acumule. Si acumula mucho en pocas horas, retíralo antes.\n\nPara retirarlo: encuentra un borde y tira hacia atrás sobre sí mismo (no hacia arriba). El mejor momento es en la ducha — el agua tibia afloja el adhesivo.' },
+      { id:'sp-parche2', label:'Segundo parche (3 a 6 días)', contenido:'Después de retirar el primero: lava suavemente el tatuaje con agua tibia y jabón neutro. Seca con papel de cocina.\n\nEspera 15 a 20 minutos antes de aplicar el segundo parche, para que se evapore el exceso de humedad.\n\nEl segundo parche puede dejarse 3 a 6 días. No uses ninguna pieza por más de 7 días.\n\nPuedes ducharte normal con el parche puesto — evita baños largos o inmersión directa.' },
+      { id:'sp-despues', label:'Después del último parche', contenido:'Retira de la misma forma (borde + tirar sobre sí mismo, idealmente en la ducha).\n\nDesde aquí aplica crema hidratante sin perfume 2 a 3 veces al día durante el resto de la cicatrización.\n\nLa cicatrización superficial dura entre 2 y 3 semanas. Es normal que la zona esté seca, con picazón o que se pele levemente.' },
+      { id:'sp-restricciones', label:'Lo que debes evitar', contenido:'☒ No piscina, mar, río, sauna ni jacuzzi durante 2 a 3 semanas.\n☒ Evita la exposición solar directa en la zona. Usa SPF 50+ una vez cicatrizado.\n☒ Sin deporte intenso ni contacto físico por 1 semana.\n☒ No rasques aunque pique — deja caer las costras naturalmente.' },
+      { id:'sp-alarma', label:'⚠ Señales de alarma', contenido:'Consulta a un médico si notas: enrojecimiento que empeora, hinchazón persistente, calor excesivo o pus en la zona. También si sientes reacción alérgica al adhesivo del parche (ardor o enrojecimiento intenso en los bordes).', alerta: true }
+    ]
+  },
+  'consentimiento': {
+    id: 'consentimiento',
+    titulo: 'Consentimiento informado',
+    desc: 'Formulario digital basado en DS N°304 · Chile.',
+    iconBg: '#2d1e1e', iconColor: '#f87171', icon: 'ti-file-certificate',
+    bloques: [
+      { id:'cons-info', label:'Información legal', contenido:'Este formulario cumple con el Artículo N°6 del Decreto Supremo N°304 de 2002 — Reglamento de tatuajes y prácticas similares.\n\nAntes de cada procedimiento el tatuador debe informar verbalmente y por escrito los riesgos, cuidados y contraindicaciones al cliente.' },
+      { id:'cons-riesgos', label:'Riesgos del procedimiento', contenido:'Hacerse un tatuaje conlleva riesgos que el cliente debe conocer:\n• Reacciones alérgicas a la tinta\n• Dermatitis de contacto\n• Infecciones bacterianas o virales si no se siguen los cuidados\n• Daños estéticos permanentes por exposición solar, cambios de peso o envejecimiento\n• Insensibilidad temporal o permanente de la zona\n• El tatuaje es permanente — retirarlo requiere tratamiento médico costoso y doloroso' },
+      { id:'cons-contraindicaciones', label:'Contraindicaciones', contenido:'No debes tatuarte si:\n• Eres menor de edad sin autorización y presencia de tu representante legal\n• Estás embarazada o en período de lactancia\n• Tienes diabetes, enfermedades cardíacas, problemas de coagulación o cicatrización\n• Padeces alergias, enfermedades de la piel, psoriasis o predisposición a queloides\n• Tienes el sistema inmunitario debilitado\n• Has consumido alcohol en las últimas 24 horas\n• Te has expuesto al sol intensamente en las últimas 24 horas' }
+    ]
+  }
+};
+
+var currentGuiaId = null;
+var guiasCustom = DB.get('ttt_guias', {});
+
+function getGuia(id) {
+  var base = JSON.parse(JSON.stringify(GUIAS_DEFAULT[id]));
+  var custom = guiasCustom[id];
+  if (custom) {
+    base.bloques = base.bloques.map(function(b) {
+      return custom[b.id] !== undefined ? Object.assign({}, b, {contenido: custom[b.id]}) : b;
+    });
+  }
+  return base;
+}
+
+function saveGuiaCustom(id, bloquesData) {
+  if (!guiasCustom[id]) guiasCustom[id] = {};
+  Object.assign(guiasCustom[id], bloquesData);
+  DB.set('ttt_guias', guiasCustom);
+}
+
+function openGuiaDetalle(id) {
+  currentGuiaId = id;
+  var g = getGuia(id);
+  document.getElementById('guia-detalle-title').textContent = g.titulo;
+  var html = '<div class="guia-hero">'
+    + '<div class="guia-hero-icon" style="background:'+g.iconBg+'"><i class="ti '+g.icon+'" style="color:'+g.iconColor+';font-size:22px"></i></div>'
+    + '<div class="guia-hero-title">'+g.titulo+'</div>'
+    + '<div class="guia-hero-desc">'+g.desc+'</div>'
+    + '</div>';
+  g.bloques.forEach(function(b) {
+    html += '<div class="guia-bloque'+(b.alerta?' alerta':'')+'">'
+      + '<div class="guia-bloque-label"><i class="ti '+(b.alerta?'ti-alert-triangle':'ti-circle-dot')+'" style="font-size:11px"></i>'+b.label+'</div>'
+      + '<div class="guia-bloque-content">'+formatGuiaText(b.contenido)+'</div>'
+      + '</div>';
+  });
+  document.getElementById('guia-detalle-body').innerHTML = html;
+  goTo('screen-guia-detalle');
+}
+
+function formatGuiaText(txt) {
+  return txt.split('\n').map(function(line) {
+    if (!line.trim()) return '<br>';
+    if (line.startsWith('•') || line.startsWith('☒')) {
+      return '<li>'+line.replace(/^[•☒]\s*/,'')+'</li>';
+    }
+    return '<p style="margin-bottom:5px">'+line+'</p>';
+  }).join('');
+}
+
+function openGuiaEditor() {
+  var g = getGuia(currentGuiaId);
+  document.getElementById('guia-editor-title').textContent = 'Editar — '+g.titulo;
+  var html = '<div style="font-size:12px;color:var(--text3);margin-bottom:1rem;line-height:1.5">Edita cada sección de tu guía. Puedes restaurar el contenido sugerido original en cualquier bloque.</div>';
+  g.bloques.forEach(function(b) {
+    html += '<div class="editor-bloque">'
+      + '<div class="editor-bloque-header"><span class="editor-bloque-label">'+b.label+'</span>'
+      + '<span class="restore-btn" data-bid="'+b.id+'">Restaurar original</span></div>'
+      + '<div class="editor-bloque-body"><textarea rows="'+(b.contenido.split('\n').length+2)+'" data-bid="'+b.id+'">'+b.contenido+'</textarea></div>'
+      + '</div>';
+  });
+  document.getElementById('guia-editor-body').innerHTML = html;
+
+  // restore buttons
+  document.querySelectorAll('#guia-editor-body .restore-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var bid = this.dataset.bid;
+      var orig = GUIAS_DEFAULT[currentGuiaId].bloques.filter(function(b){return b.id===bid;})[0];
+      if (orig) {
+        var ta = document.querySelector('#guia-editor-body textarea[data-bid="'+bid+'"]');
+        if (ta) { ta.value = orig.contenido; showToast('Bloque restaurado'); }
+      }
+    });
+  });
+  goTo('screen-guia-editor');
+}
+
+function saveGuiaEdits() {
+  var data = {};
+  document.querySelectorAll('#guia-editor-body textarea').forEach(function(ta) {
+    data[ta.dataset.bid] = ta.value;
+  });
+  saveGuiaCustom(currentGuiaId, data);
+  showToast('Guía guardada ✓');
+  goBack();
+  openGuiaDetalle(currentGuiaId);
+}
+
+function generarTextoWA(id) {
+  var g = getGuia(id);
+  var nombre = perfil.artistic || perfil.nombre || 'Tu tatuador';
+  var lines = ['✦ *'+g.titulo.toUpperCase()+'*', '_'+g.desc+'_', ''];
+  g.bloques.forEach(function(b) {
+    if (b.alerta) return;
+    lines.push('*'+b.label+'*');
+    lines.push(b.contenido);
+    lines.push('');
+  });
+  lines.push('————————————');
+  lines.push('_'+nombre+' · @ansep.tattoo_');
+  return lines.join('\n');
+}
+
+function generarLinkGuia(id) {
+  var g = getGuia(id);
+  var nombre = perfil.artistic || perfil.nombre || 'Ansep Tattoo';
+  var ig = perfil.ig || '@ansep.tattoo';
+
+  var bloqueHtml = g.bloques.map(function(b) {
+    var lines = b.contenido.split('\n').map(function(l) {
+      if (!l.trim()) return '';
+      if (l.startsWith('•') || l.startsWith('☒')) return '<li>'+l.replace(/^[•☒]\s*/,'')+'</li>';
+      return '<p>'+l+'</p>';
+    }).join('');
+    return '<div class="bloque'+(b.alerta?' alerta':'')+'">'
+      +'<div class="bloque-label">'+b.label+'</div>'
+      +'<div class="bloque-body">'+lines+'</div>'
+      +'</div>';
+  }).join('');
+
+  var html = '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+    +'<title>'+g.titulo+' · '+nombre+'</title>'
+    +'<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">'
+    +'<style>'
+    +'*{box-sizing:border-box;margin:0;padding:0}body{font-family:"DM Sans",sans-serif;background:#F0EEE8;color:#322D27;font-size:15px;}'
+    +'.wrap{max-width:480px;margin:0 auto;padding-bottom:3rem}'
+    +'.hero{background:#322D27;padding:2rem 1.5rem 1.75rem}'
+    +'.hero-icon{width:48px;height:48px;border-radius:10px;background:'+g.iconBg+';display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:24px}'
+    +'.hero-title{font-size:24px;font-weight:500;color:#E2E1EB;line-height:1.2}'
+    +'.hero-desc{font-size:14px;color:#7F7265;margin-top:6px}'
+    +'.bloque{background:#fff;margin:1px 0;padding:1.25rem 1.5rem}'
+    +'.bloque-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#AAAAAE;margin-bottom:.75rem}'
+    +'.bloque-body p{margin-bottom:6px;line-height:1.65}li{margin-left:1.1rem;margin-bottom:4px;line-height:1.65}'
+    +'.bloque.alerta{background:#fff5f5}.bloque.alerta .bloque-label{color:#A32D2D}'
+    +'.footer{padding:1.5rem;text-align:center;font-size:13px;color:#AAAAAE}'
+    +'.footer strong{color:#BF8440}'
+    +'</style></head><body><div class="wrap">'
+    +'<div class="hero"><div class="hero-title">'+g.titulo+'</div><div class="hero-desc">'+g.desc+'</div></div>'
+    +bloqueHtml
+    +'<div class="footer">Preparado por <strong>'+nombre+'</strong><br>'+ig+'</div>'
+    +'</div></body></html>';
+
+  var blob = new Blob([html], {type:'text/html'});
+  var url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+}
+
+// ══ WIRE DE GUÍAS ══
 function wire() {
   // navbar
   document.getElementById('nav-home').addEventListener('click', function(){ navTo('screen-home'); });
@@ -1171,6 +1492,43 @@ function wire() {
   // guias / stats back
   document.getElementById('btn-back-guias').addEventListener('click', goBack);
   document.getElementById('btn-back-stats').addEventListener('click', goBack);
+
+  // guias — lista
+  document.querySelectorAll('#screen-guias .guia-card').forEach(function(card) {
+    card.addEventListener('click', function(){ openGuiaDetalle(this.dataset.guia); });
+  });
+
+  // guia detalle
+  document.getElementById('btn-back-guia-detalle').addEventListener('click', goBack);
+  document.getElementById('btn-editar-guia').addEventListener('click', openGuiaEditor);
+  document.getElementById('btn-guia-enviar').addEventListener('click', function(){ openModal('modal-enviar-guia'); });
+  document.getElementById('btn-guia-link').addEventListener('click', function(){ generarLinkGuia(currentGuiaId); });
+
+  // guia editor
+  document.getElementById('btn-back-guia-editor').addEventListener('click', goBack);
+  document.getElementById('btn-cancel-guia-edit').addEventListener('click', goBack);
+  document.getElementById('btn-save-guia-edit').addEventListener('click', saveGuiaEdits);
+
+  // modal enviar guia
+  document.getElementById('btn-cancel-enviar-guia').addEventListener('click', function(){ closeModal('modal-enviar-guia'); });
+  document.getElementById('btn-enviar-wa').addEventListener('click', function(){
+    var texto = generarTextoWA(currentGuiaId);
+    navigator.clipboard.writeText(texto).then(function(){
+      closeModal('modal-enviar-guia');
+      showToast('Texto copiado — pégalo en WhatsApp ✓');
+    }).catch(function(){
+      // fallback
+      var ta = document.createElement('textarea');
+      ta.value = texto; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      closeModal('modal-enviar-guia');
+      showToast('Texto copiado ✓');
+    });
+  });
+  document.getElementById('btn-enviar-link').addEventListener('click', function(){
+    closeModal('modal-enviar-guia');
+    generarLinkGuia(currentGuiaId);
+  });
 
   // perfil
   document.getElementById('btn-edit-perfil').addEventListener('click', openEditPerfil);
