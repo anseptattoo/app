@@ -9,24 +9,44 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 :root {
-  --bg:#F5F0E6; --surface:#FDFCF8; --surface2:#EBF2EC;
+  --bg:#F0EEE8; --surface:#fff; --surface2:#F8F6F2;
   --border:rgba(0,0,0,0.08); --border2:rgba(0,0,0,0.05);
-  --text1:#1a1a14; --text2:#4a6b52; --text3:#aaa;
-  --amber:#C9A84C; --amber-light:#EBF2EC;
-  --dark:#2A5038; --mist:#e0d8ca; --ash:#aaa; --stone:#4a6b52;
+  --text1:#322D27; --text2:#7F7265; --text3:#AAAAAE;
+  --amber:#BF8440; --amber-light:#FDF4E8;
+  --dark:#322D27; --mist:#E2E1EB; --ash:#AAAAAE; --stone:#7F7265;
   --danger:#A32D2D;
   --font:'DM Sans',sans-serif; --mono:'DM Mono',monospace;
-  --hero-bg:#EBF2EC; --hero-border:#c8deca;
-  --hero-eyebrow:#2A5038; --hero-name:#1a2e1e; --hero-ig:#7a9e82; --hero-sub:#4a6b52;
   --r:10px; --rsm:6px; --nav:64px; --top:56px;
+  /* theme accent pair */
+  --accent:var(--amber); --accent-light:var(--amber-light);
+  --hero-bg:var(--dark); --hero-mist:var(--mist);
 }
 [data-dark="true"] {
-  --hero-bg:#38352F; --hero-border:rgba(255,255,255,0.07);
-  --hero-eyebrow:#C9A84C; --hero-name:#F5F0E6; --hero-ig:#7a7468; --hero-sub:#a09c94;
-  --bg:#2A2722; --surface:#38352F; --surface2:#312E29;
+  --bg:#1A1713; --surface:#22201C; --surface2:#2A2722;
   --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.04);
-  --text1:#F5F0E6; --text2:#a09c94; --text3:#5a5650; --amber-light:#312E29;
+  --text1:#E2E1EB; --text2:#7F7265; --text3:#4A4540; --amber-light:#2A2218;
 }
+
+/* ── TEMAS ── */
+/* Bosque (default) */
+[data-theme="bosque"] { --amber:#BF8440; --amber-light:#FDF4E8; --dark:#2A5038; --mist:#E2E1EB; }
+[data-theme="bosque"][data-dark="true"] { --amber-light:#1a2e20; }
+
+/* Noche */
+[data-theme="noche"] { --amber:#C0C0C8; --amber-light:#F4F4F6; --dark:#111114; --mist:#E4E4EA; }
+[data-theme="noche"][data-dark="true"] { --amber:#A0A0B0; --amber-light:#1A1A22; }
+
+/* Mora */
+[data-theme="mora"] { --amber:#8B5CF6; --amber-light:#F3EFFE; --dark:#3B2070; --mist:#EDE9FA; }
+[data-theme="mora"][data-dark="true"] { --amber:#A78BFA; --amber-light:#1E1340; }
+
+/* Océano */
+[data-theme="oceano"] { --amber:#2E86C1; --amber-light:#EBF5FB; --dark:#0D3B5E; --mist:#D6EAF8; }
+[data-theme="oceano"][data-dark="true"] { --amber:#5DADE2; --amber-light:#0A2A40; }
+
+/* Carbón */
+[data-theme="carbon"] { --amber:#E8D5B0; --amber-light:#FBF8F2; --dark:#1C1C1C; --mist:#E8E8E8; }
+[data-theme="carbon"][data-dark="true"] { --amber:#C8B890; --amber-light:#202020; }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--text1);font-size:14px;}
 body{display:flex;justify-content:center;}
@@ -269,35 +289,26 @@ body{display:flex;justify-content:center;}
       <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)">Bienvenido</div>
       <div style="font-size:18px;font-weight:500;color:var(--text1);margin-top:1px" id="home-artist-name">—</div>
     </div>
+    <button class="icon-btn" id="btn-tema"><i class="ti ti-palette"></i></button>
     <button class="icon-btn" id="btn-go-perfil"><i class="ti ti-user-circle"></i></button>
   </div>
   <div class="screen-body"><div class="pad">
     <div class="section-label">Próxima cita</div>
-    <div id="home-next-card" style="background:var(--hero-bg);border:0.5px solid var(--hero-border);border-radius:var(--r);padding:1.1rem;position:relative;overflow:hidden;margin-bottom:1rem;">
+    <div id="home-next-card" style="background:var(--dark);border-radius:var(--r);padding:1.1rem;position:relative;overflow:hidden;margin-bottom:1rem;">
+      <div style="position:absolute;right:-20px;top:-20px;width:90px;height:90px;border-radius:50%;background:var(--amber);opacity:.08"></div>
       <div id="home-next-content"></div>
     </div>
-    <div class="section-label">Este mes</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
-      <div class="block" style="margin-bottom:0"><div class="block-body" style="padding:.75rem .875rem">
-        <div class="section-label" style="margin-bottom:3px">Proyectos</div>
-        <div style="font-size:22px;font-weight:500;color:var(--text1)" id="stat-total">0</div>
-        <div style="font-size:11px;color:var(--text3);margin-top:1px" id="stat-curso">0 en curso</div>
-      </div></div>
-      <div class="block" style="margin-bottom:0"><div class="block-body" style="padding:.75rem .875rem">
-        <div class="section-label" style="margin-bottom:3px">Agendados</div>
-        <div style="font-size:22px;font-weight:500;color:var(--text1)" id="stat-agd">0</div>
-        <div style="font-size:11px;color:var(--text3);margin-top:1px">próx. 30 días</div>
-      </div></div>
-      <div class="block" style="margin-bottom:0"><div class="block-body" style="padding:.75rem .875rem">
-        <div class="section-label" style="margin-bottom:3px">Cotizaciones</div>
-        <div style="font-size:22px;font-weight:500;color:var(--text1)" id="stat-cot">0</div>
-        <div style="font-size:11px;color:var(--text3);margin-top:1px">sin confirmar</div>
-      </div></div>
-      <div class="block" style="margin-bottom:0"><div class="block-body" style="padding:.75rem .875rem">
-        <div class="section-label" style="margin-bottom:3px">Ingresos</div>
-        <div style="font-size:20px;font-weight:500;color:var(--amber);font-family:var(--mono)" id="stat-ing">$0</div>
-        <div style="font-size:11px;color:var(--text3);margin-top:1px" id="stat-ses">0 sesiones</div>
-      </div></div>
+      <div class="block" style="margin-bottom:0;display:flex;flex-direction:column;">
+        <div class="block-header"><span class="block-title">Próximas</span></div>
+        <div class="block-body" style="padding:.6rem .75rem;flex:1" id="home-upcoming-list"></div>
+      </div>
+      <div class="block" style="margin-bottom:0;display:flex;flex-direction:column;">
+        <div class="block-header"><span class="block-title">Notas</span></div>
+        <div style="flex:1;padding:.5rem .65rem">
+          <textarea id="home-notas" placeholder="ideas, pendientes…" style="min-height:100px;background:transparent;border:none;outline:none;font-size:12px;color:var(--text1);font-family:var(--font);resize:none;line-height:1.6;width:100%;"></textarea>
+        </div>
+      </div>
     </div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem">
       <div class="section-label" style="margin-bottom:0">Proyectos recientes</div>
@@ -616,6 +627,17 @@ body{display:flex;justify-content:center;}
   <div class="nav-item" data-screen="screen-mas" id="nav-mas"><i class="ti ti-dots"></i><span>Más</span></div>
 </nav>
 
+<!-- ══ MODAL: TEMAS ══ -->
+<div class="modal-overlay" id="modal-temas">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Elige tu tema</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:1.25rem">El color base de tu app. Funciona en modo claro y oscuro.</div>
+    <div id="tema-opts" style="display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem"></div>
+    <button class="btn btn-secondary btn-full" id="btn-cancel-temas">Cerrar</button>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <!-- ══ MODAL: PROYECTO ══ -->
@@ -843,26 +865,42 @@ function renderHome() {
   var nc = document.getElementById('home-next-content');
   if (next) {
     var isToday = next.fecha === todayStr();
-    nc.innerHTML = '<div style="font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--hero-eyebrow);margin-bottom:8px">Próxima sesión</div>'
-      +'<div style="display:flex;align-items:baseline;gap:7px;margin-bottom:3px">'
-      +'<span style="font-size:19px;font-weight:500;color:var(--hero-name)">'+next.clienteNombre+'</span>'
-      +(next.ig?'<span style="font-size:12px;color:var(--hero-ig)">'+next.ig+'</span>':'')
-      +'</div>'
-      +'<div style="font-size:12px;color:var(--hero-sub);margin-bottom:12px">'+next.tattooNombre+' · '+(next.zona||'—')+' · Sesión '+((next.sesionesHechas||0)+1)+'/'+next.sesiones+'</div>'
-      +'<div style="display:inline-block;background:var(--amber);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:500;color:#1a1a10">'+(isToday?'Hoy':''+fmtFecha(next.fecha))+(next.hora?' · '+next.hora:'')+'</div>';
+    nc.innerHTML = '<div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#4A4540;margin-bottom:4px">'+(isToday?'Hoy':'Próximamente')+' · '+fmtFecha(next.fecha)+'</div>'
+      +'<div style="font-size:19px;font-weight:500;color:var(--mist)">'+next.clienteNombre+'</div>'
+      +'<div style="font-size:13px;color:var(--stone);margin-top:3px">'+next.tattooNombre+' · '+(next.zona||'—')+' · Sesión '+((next.sesionesHechas||0)+1)+'/'+next.sesiones+'</div>'
+      +'<div style="margin-top:10px;display:flex;align-items:center;gap:8px"><div style="background:var(--amber);border-radius:4px;padding:5px 12px;font-size:14px;font-weight:500;color:#fff">'+(next.hora||'—')+'</div></div>';
   } else {
-    nc.innerHTML = '<div style="font-size:13px;color:var(--hero-sub);text-align:center;padding:.5rem 0">Sin citas próximas agendadas</div>';
+    nc.innerHTML = '<div style="font-size:13px;color:#4A4540;text-align:center;padding:.5rem 0">Sin citas próximas agendadas</div>';
   }
 
-  document.getElementById('stat-total').textContent = proyectos.length;
-  document.getElementById('stat-curso').textContent = proyectos.filter(function(p){return p.estado!=='tatuado';}).length+' en curso';
-  document.getElementById('stat-agd').textContent = proyectos.filter(function(p){return p.estado==='agendado';}).length;
-  document.getElementById('stat-cot').textContent = proyectos.filter(function(p){return p.estado==='cotizacion';}).length;
-  var ingTotal = proyectos.reduce(function(s,p){return s+(Number(p.precio)||0);},0);
-  document.getElementById('stat-ing').textContent = fmt(ingTotal);
-  var totalSes = proyectos.reduce(function(s,p){return s+(Number(p.sesionesHechas)||0);},0);
-  document.getElementById('stat-ses').textContent = totalSes+' sesiones';
+  // Próximas citas — lista compacta
+  var futuras = proyectos.filter(function(p){ return p.estado==='agendado' && p.fecha && new Date(p.fecha+'T23:59:59') >= now; })
+    .sort(function(a,b){ return new Date(a.fecha)-new Date(b.fecha); }).slice(0,5);
+  var ul = document.getElementById('home-upcoming-list');
+  if (!futuras.length) {
+    ul.innerHTML = '<div style="font-size:11px;color:var(--text3);padding:.25rem 0">Sin citas agendadas</div>';
+  } else {
+    ul.innerHTML = futuras.map(function(p){
+      var isHoy = p.fecha === todayStr();
+      return '<div style="display:flex;align-items:baseline;gap:5px;padding:3px 0;border-bottom:0.5px solid var(--border2)">'
+        +'<div style="width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0;margin-top:2px"></div>'
+        +'<div style="flex:1;min-width:0">'
+        +'<div style="font-size:12px;font-weight:500;color:var(--text1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+p.clienteNombre+'</div>'
+        +'<div style="font-size:10px;color:var(--text3)">'+(isHoy?'Hoy':fmtFecha(p.fecha))+(p.hora?' · '+p.hora:'')+'</div>'
+        +'</div></div>';
+    }).join('');
+  }
 
+  // Notas
+  var notasEl = document.getElementById('home-notas');
+  if (notasEl) {
+    notasEl.value = DB.get('ttt_notas', '');
+    notasEl.addEventListener('input', function(){
+      DB.set('ttt_notas', this.value);
+    });
+  }
+
+  // Proyectos recientes
   var recent = proyectos.slice().reverse().slice(0,4);
   var el = document.getElementById('home-recent');
   if (!recent.length) {
@@ -912,13 +950,13 @@ function renderProyectos() {
 function projCardHtml(p) {
   var sessDots = '';
   for (var i=0;i<(p.sesiones||1);i++) sessDots += '<div class="sdot-sm'+(i<(p.sesionesHechas||0)?' on':'')+'"></div>';
+  var zonaSize = [p.zona, p.tamano ? '('+p.tamano+')' : ''].filter(Boolean).join(' ');
   return '<div class="proj-card'+(p.estado==='tatuado'?' done':'')+'" data-id="'+p.id+'">'
-    +'<div class="proj-top"><div><div class="proj-name">'+p.clienteNombre+'</div><div class="proj-handle">'+(p.ig||p.tel||'')+'</div></div>'+badgeHtml(p.estado)+'</div>'
-    +'<div class="proj-meta">'
-    +'<div class="meta-item"><div class="meta-label">Tatuaje</div><div class="meta-val">'+(p.tattooNombre||'—')+'</div></div>'
-    +'<div class="meta-item"><div class="meta-label">Zona</div><div class="meta-val">'+(p.zona||'—')+'</div></div>'
-    +'<div class="meta-item"><div class="meta-label">Tamaño</div><div class="meta-val">'+(p.tamano||'—')+' ('+sizeLabel(p.tamano)+')</div></div>'
-    +'<div class="meta-item"><div class="meta-label">Precio</div><div class="meta-val amber">'+fmt(p.precio)+'</div></div>'
+    +'<div class="proj-top"><div style="min-width:0;flex:1;margin-right:8px"><div class="proj-name" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+p.clienteNombre+'</div>'
+    +'<div class="proj-handle" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(p.ig||p.tel||'')+'</div></div>'+badgeHtml(p.estado)+'</div>'
+    +'<div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px">'
+    +'<div style="font-size:11px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;margin-right:8px">'+(p.tattooNombre||'—')+(zonaSize?' · '+zonaSize:'')+'</div>'
+    +'<div style="font-size:11px;font-family:var(--mono);color:var(--amber);flex-shrink:0">'+fmt(p.precio)+'</div>'
     +'</div>'
     +'<div class="proj-footer"><div class="proj-date"><i class="ti ti-clock" style="font-size:11px"></i>'+(p.estado==='tatuado'?'Completado':fmtFecha(p.fecha,p.hora))+'</div>'
     +'<div style="display:flex;align-items:center">'+sessDots+'<span class="sess-lbl">'+(p.sesionesHechas||0)+'/'+(p.sesiones||1)+' ses.</span></div></div>'
@@ -1242,6 +1280,42 @@ function toggleDark() {
   document.getElementById('dark-toggle').classList.toggle('on', !isDark);
 }
 
+// ══ TEMAS ══
+var TEMAS = [
+  { id:'bosque', nombre:'Bosque', desc:'Verde oscuro · Dorado', dot1:'#2A5038', dot2:'#BF8440' },
+  { id:'noche',  nombre:'Noche',  desc:'Negro absoluto · Plateado', dot1:'#111114', dot2:'#C0C0C8' },
+  { id:'mora',   nombre:'Mora',   desc:'Morado profundo · Lavanda', dot1:'#3B2070', dot2:'#8B5CF6' },
+  { id:'oceano', nombre:'Océano', desc:'Azul marino · Celeste', dot1:'#0D3B5E', dot2:'#2E86C1' },
+  { id:'carbon', nombre:'Carbón', desc:'Grafito · Crema', dot1:'#1C1C1C', dot2:'#E8D5B0' }
+];
+
+function applyTheme(id) {
+  document.documentElement.dataset.theme = id;
+  DB.set('ttt_tema', id);
+  renderTemaOpts();
+}
+
+function renderTemaOpts() {
+  var current = DB.get('ttt_tema', 'bosque');
+  var el = document.getElementById('tema-opts');
+  if (!el) return;
+  el.innerHTML = TEMAS.map(function(t) {
+    var sel = t.id === current;
+    return '<div data-tid="'+t.id+'" style="display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:var(--r);background:var(--surface2);border:0.5px solid '+(sel?'var(--amber)':'var(--border)')+';cursor:pointer">'
+      +'<div style="display:flex;gap:4px;flex-shrink:0">'
+      +'<div style="width:18px;height:18px;border-radius:50%;background:'+t.dot1+'"></div>'
+      +'<div style="width:18px;height:18px;border-radius:50%;background:'+t.dot2+'"></div>'
+      +'</div>'
+      +'<div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--text1)">'+t.nombre+'</div>'
+      +'<div style="font-size:11px;color:var(--text3)">'+t.desc+'</div></div>'
+      +(sel?'<i class="ti ti-check" style="color:var(--amber);font-size:16px"></i>':'')
+      +'</div>';
+  }).join('');
+  el.querySelectorAll('[data-tid]').forEach(function(opt) {
+    opt.addEventListener('click', function(){ applyTheme(this.dataset.tid); });
+  });
+}
+
 // ══ GUÍAS ══
 var GUIAS_DEFAULT = {
   'pre': {
@@ -1456,6 +1530,8 @@ function wire() {
   // home
   document.getElementById('btn-go-perfil').addEventListener('click', function(){ goTo('screen-perfil'); });
   document.getElementById('btn-ver-todos').addEventListener('click', function(){ navTo('screen-proyectos'); });
+  document.getElementById('btn-tema').addEventListener('click', function(){ renderTemaOpts(); openModal('modal-temas'); });
+  document.getElementById('btn-cancel-temas').addEventListener('click', function(){ closeModal('modal-temas'); });
 
   // proyectos
   document.getElementById('btn-nuevo-proj').addEventListener('click', openNewProyecto);
@@ -1567,6 +1643,8 @@ function wire() {
 if (DB.get('ttt_dark', false)) {
   document.documentElement.dataset.dark = 'true';
 }
+var savedTheme = DB.get('ttt_tema', 'bosque');
+document.documentElement.dataset.theme = savedTheme;
 wire();
 renderHome();
 renderCalendar();
